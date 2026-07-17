@@ -1,0 +1,145 @@
+<svg width="800" height="880" viewBox="0 0 800 880" xmlns="http://www.w3.org/2000/svg" style="background-color: #F8F9FA; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+    <defs>
+        <!-- 箭头定义 -->
+        <marker id="arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#43A047"/>
+        </marker>
+        <marker id="arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#E53935"/>
+        </marker>
+        <marker id="arrow-blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#1E88E5"/>
+        </marker>
+
+        <!-- 阴影滤镜 -->
+        <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+            <feDropShadow dx="2" dy="4" stdDeviation="3" flood-opacity="0.1"/>
+        </filter>
+        <filter id="shadow-heavy" x="-5%" y="-5%" width="110%" height="110%">
+            <feDropShadow dx="3" dy="5" stdDeviation="4" flood-opacity="0.15"/>
+        </filter>
+
+        <!-- 渐变色定义 -->
+        <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#FFF8E1" />
+            <stop offset="100%" stop-color="#FFECB3" />
+        </linearGradient>
+        <linearGradient id="blueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#E3F2FD" />
+            <stop offset="100%" stop-color="#BBDEFB" />
+        </linearGradient>
+        <linearGradient id="greenGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#E8F5E9" />
+            <stop offset="100%" stop-color="#C8E6C9" />
+        </linearGradient>
+        <linearGradient id="orangeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#FFF3E0" />
+            <stop offset="100%" stop-color="#FFE0B2" />
+        </linearGradient>
+        <linearGradient id="redGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#FFEBEE" />
+            <stop offset="100%" stop-color="#FFCDD2" />
+        </linearGradient>
+    </defs>
+
+    <!-- 标题 -->
+    <text x="400" y="30" text-anchor="middle" font-size="22" font-weight="bold" fill="#2C3E50" letter-spacing="1">最小方差无偏估计（UMVUE）学习路径</text>
+    <text x="400" y="52" text-anchor="middle" font-size="14" fill="#666">从初始估计量到一致最小方差无偏估计的推导流程</text>
+
+    <!-- ==================== 节点连接线（路径） ==================== -->
+    
+    <!-- 初始分叉判断 -->
+    <text x="400" y="140" text-anchor="middle" font-size="13" fill="#666">是否包含 θ 全部信息？</text>
+    
+    <!-- N1 到 N2a（充分统计量 - 好路径） -->
+    <path d="M 350 120 L 350 150 L 200 150 L 200 170" stroke="#43A047" stroke-width="2.5" fill="none" marker-end="url(#arrow-green)"/>
+    <!-- N1 到 N2b（辅助统计量 - 坏路径） -->
+    <path d="M 450 120 L 450 150 L 600 150 L 600 170" stroke="#E53935" stroke-width="2.5" fill="none" marker-end="url(#arrow-red)"/>
+
+    <!-- 好路径：N2a -> N3a -> N4a -> N5a -> N6a -> N7 -->
+    <path d="M 200 220 L 200 280" stroke="#43A047" stroke-width="2.5" fill="none" marker-end="url(#arrow-green)"/>
+    <path d="M 200 340 L 200 400" stroke="#43A047" stroke-width="2.5" fill="none" marker-end="url(#arrow-green)"/>
+    <path d="M 200 450 L 200 510" stroke="#43A047" stroke-width="2.5" fill="none" marker-end="url(#arrow-green)"/>
+    <path d="M 200 570 L 200 630" stroke="#43A047" stroke-width="2.5" fill="none" marker-end="url(#arrow-green)"/>
+    <path d="M 200 690 L 200 730 L 400 730 L 400 750" stroke="#43A047" stroke-width="2.5" fill="none" marker-end="url(#arrow-green)"/>
+
+    <!-- 坏路径：N2b -> N3b -> N4b -> N5b -> N7 -->
+    <path d="M 600 220 L 600 280" stroke="#E53935" stroke-width="2.5" fill="none" marker-end="url(#arrow-red)"/>
+    <path d="M 600 330 L 600 400" stroke="#E53935" stroke-width="2.5" fill="none" marker-end="url(#arrow-red)"/>
+    <path d="M 600 450 L 600 510" stroke="#E53935" stroke-width="2.5" fill="none" marker-end="url(#arrow-red)"/>
+    <!-- N5b 到 N7：虚线表示死胡同 -->
+    <path d="M 600 560 L 600 590 L 400 590 L 400 750" stroke="#E53935" stroke-width="2" stroke-dasharray="6,4" fill="none" marker-end="url(#arrow-red)"/>
+
+    <!-- ==================== 节点 ==================== -->
+
+    <!-- N1：初始估计量 -->
+    <rect x="300" y="70" width="200" height="50" rx="10" fill="url(#blueGradient)" stroke="#1E88E5" stroke-width="2" filter="url(#shadow)"/>
+    <text x="400" y="95" text-anchor="middle" font-size="14" font-weight="bold" fill="#0D47A1">初始无偏估计（如 X₁）</text>
+
+    <!-- N2a：充分统计量 -->
+    <rect x="100" y="170" width="200" height="50" rx="8" fill="url(#greenGradient)" stroke="#43A047" stroke-width="2"/>
+    <text x="200" y="195" text-anchor="middle" font-size="14" font-weight="bold" fill="#1B5E20">充分统计量 T</text>
+
+    <!-- N2b：辅助统计量 -->
+    <rect x="500" y="170" width="200" height="50" rx="8" fill="url(#redGradient)" stroke="#E53935" stroke-width="2"/>
+    <text x="600" y="190" text-anchor="middle" font-size="14" font-weight="bold" fill="#B71C1C">辅助统计量 S</text>
+    <text x="600" y="208" text-anchor="middle" font-size="12" fill="#B71C1C">（分布与 θ 无关）</text>
+
+    <!-- N3a：Rao-Blackwell 定理 -->
+    <rect x="100" y="280" width="200" height="60" rx="8" fill="url(#orangeGradient)" stroke="#FB8C00" stroke-width="2" filter="url(#shadow)"/>
+    <text x="200" y="305" text-anchor="middle" font-size="13" font-weight="bold" fill="#E65100">Rao-Blackwell 定理</text>
+    <text x="200" y="325" text-anchor="middle" font-size="12" fill="#E65100">E[θ̂|T] 方差更小</text>
+
+    <!-- N3b：基于 S 的估计量 -->
+    <rect x="500" y="280" width="200" height="50" rx="8" fill="url(#redGradient)" stroke="#E53935" stroke-width="2"/>
+    <text x="600" y="305" text-anchor="middle" font-size="14" font-weight="bold" fill="#B71C1C">基于 S 的估计量</text>
+
+    <!-- N4a：改进后的估计量 -->
+    <rect x="100" y="400" width="200" height="50" rx="8" fill="url(#greenGradient)" stroke="#43A047" stroke-width="2"/>
+    <text x="200" y="425" text-anchor="middle" font-size="14" font-weight="bold" fill="#1B5E20">改进后的估计量</text>
+
+    <!-- N4b：MSE 无法降低 -->
+    <rect x="500" y="400" width="200" height="50" rx="8" fill="url(#redGradient)" stroke="#E53935" stroke-width="2"/>
+    <text x="600" y="425" text-anchor="middle" font-size="14" font-weight="bold" fill="#B71C1C">MSE 无法降低</text>
+
+    <!-- N5a：完备性 -->
+    <rect x="100" y="510" width="200" height="60" rx="8" fill="url(#orangeGradient)" stroke="#FB8C00" stroke-width="2" filter="url(#shadow)"/>
+    <text x="200" y="535" text-anchor="middle" font-size="13" font-weight="bold" fill="#E65100">完备性条件</text>
+    <text x="200" y="555" text-anchor="middle" font-size="12" fill="#E65100">E[g(T)]=0 ⇒ g(T)=0</text>
+
+    <!-- N5b：无法达到 UMVUE -->
+    <rect x="500" y="510" width="200" height="50" rx="8" fill="url(#redGradient)" stroke="#E53935" stroke-width="2"/>
+    <text x="600" y="535" text-anchor="middle" font-size="13" font-weight="bold" fill="#B71C1C">无法达到 UMVUE</text>
+
+    <!-- N6a：Lehmann-Scheffé 定理 -->
+    <rect x="100" y="630" width="200" height="60" rx="8" fill="url(#orangeGradient)" stroke="#FB8C00" stroke-width="2" filter="url(#shadow)"/>
+    <text x="200" y="655" text-anchor="middle" font-size="13" font-weight="bold" fill="#E65100">Lehmann-Scheffé 定理</text>
+    <text x="200" y="675" text-anchor="middle" font-size="12" fill="#E65100">UMVUE = E[θ̂|T]</text>
+
+    <!-- N7：最终目标 UMVUE -->
+    <rect x="250" y="750" width="300" height="60" rx="15" fill="url(#goldGradient)" stroke="#FF8F00" stroke-width="3" filter="url(#shadow-heavy)"/>
+    <text x="400" y="775" text-anchor="middle" font-size="15" font-weight="bold" fill="#3E2723">UMVUE（目标达成）</text>
+    <text x="400" y="795" text-anchor="middle" font-size="12" font-weight="bold" fill="#5D4037">一致最小方差无偏估计</text>
+
+    <!-- ==================== 注释文本框 ==================== -->
+    
+    <!-- 路径好路径注释 -->
+    <text x="320" y="370" font-size="12" fill="#43A047">Rao-Blackwell 定理</text>
+    <text x="320" y="385" font-size="12" fill="#43A047">保证方差减小</text>
+
+    <text x="320" y="540" font-size="12" fill="#43A047">完备性条件</text>
+    <text x="320" y="555" font-size="12" fill="#43A047">保证无偏估计唯一</text>
+
+    <text x="320" y="720" font-size="12" fill="#43A047">Lehmann-Scheffé 定理</text>
+    <text x="320" y="735" font-size="12" fill="#43A047">直接给出 UMVUE</text>
+
+    <!-- 坏路径注释 -->
+    <text x="720" y="195" font-size="12" fill="#E53935">不包含 θ</text>
+    <text x="720" y="210" font-size="12" fill="#E53935">任何信息</text>
+
+    <text x="720" y="480" font-size="12" fill="#E53935">信息损失</text>
+    <text x="720" y="495" font-size="12" fill="#E53935">无法改进</text>
+
+    <text x="500" y="580" font-size="12" fill="#E53935" text-anchor="middle">统计量不是充分的</text>
+
+</svg>

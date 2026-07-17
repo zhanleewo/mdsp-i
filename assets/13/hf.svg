@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 450" width="100%" height="auto">
+  <style>
+    .axis { stroke: #ccc; stroke-width: 1; }
+    .mirror { stroke: #333; stroke-width: 2.5; stroke-dasharray: 10,5; }
+    .mirror-label { font-family: 'Times New Roman', serif; font-size: 18px; font-style: italic; fill: #444; }
+    .vec-x { stroke: #cc2222; stroke-width: 3.5; marker-end: url(#arrow-red); }
+    .vec-hx { stroke: #2266cc; stroke-width: 3.5; marker-end: url(#arrow-blue); }
+    .vec-proj { stroke: #00aaff; stroke-width: 3.5; marker-end: url(#arrow-00aaff); }
+    .dashed-line { stroke: #888; stroke-width: 2; stroke-dasharray: 6,4; }
+    .perp-line { stroke: #2e7d32; stroke-width: 2; stroke-dasharray: 5,4; }
+    .right-angle { stroke: #2e7d32; stroke-width: 1.5; fill: none; }
+    .dot { fill: #222; }
+    .label { font-family: 'Times New Roman', serif; font-size: 28px; font-weight: bold; font-style: italic; }
+    .label-sm { font-family: 'Times New Roman', serif; font-size: 20px; font-weight: bold; font-style: italic; }
+  </style>
+
+  <defs>
+    <marker id="arrow-red" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#cc2222" />
+    </marker>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2266cc" />
+    </marker>
+    <marker id="arrow-00aaff" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#00aaff" />
+    </marker>
+  </defs>
+
+  <!-- 背景 -->
+  <rect width="700" height="450" fill="#fafbfc" rx="6" />
+
+  <!-- 标题 -->
+  <text x="350" y="35" class="label" text-anchor="middle" fill="#1a1a1a" font-size="22" font-weight="bold">Householder 反射几何意义（二维平面）</text>
+
+  <!-- 原点 O（在超平面上） -->
+  <!-- 超平面是 y = 225 的水平线，原点 O = (200, 225) -->
+  <g transform="translate(200, 225)">
+    <!-- 坐标轴（辅助线） -->
+    <line x1="-150" y1="0" x2="450" y2="0" class="axis" />
+    <line x1="0" y1="-180" x2="0" y2="180" class="axis" />
+
+    <!-- 超平面（水平镜面） -->
+    <line x1="-150" y1="0" x2="450" y2="0" class="mirror" />
+
+    <line x1="0" y1="0" x2="160" y2="0" class="vec-proj" />
+
+    <!-- 原点标记 -->
+    <circle cx="0" cy="0" r="4.5" class="dot" />
+    <text x="10" y="20" class="label-sm" fill="#333" font-size="18">O</text>
+
+    <!-- 向量 x = (2.5, 1.5) -> 像素 (125, -75)，为了更明显，取 (3, 1.8) -> (150, -90) -->
+    <!-- 但 x 和 Hx 应该足够长，以形成清晰的平行四边形。取 (3.2, 2.0) -> (160, -100) -->
+    <!-- A = (160, -100) -->
+
+    <!-- 向量 x（斜向上） -->
+    <line x1="0" y1="0" x2="160" y2="-100" class="vec-x" />
+    <circle cx="160" cy="-100" r="5" fill="#cc2222" />
+    <text x="170" y="-110" class="label" fill="#cc2222">x</text>
+
+    <!-- 向量 Hx（斜向下，关于水平线对称） -->
+    <!-- Hx = (3.2, -2.0) -> (160, 100) -->
+    <line x1="0" y1="0" x2="160" y2="100" class="vec-hx" />
+    <circle cx="160" cy="100" r="5" fill="#2266cc" />
+    <text x="170" y="120" class="label" fill="#2266cc">Hx</text>
+
+    <!-- 平行四边形（以 x 和 Hx 为邻边） -->
+    <!-- C = x + Hx = (3.2+3.2, 2.0-2.0) = (6.4, 0) -> (320, 0) -->
+    <!-- O -> A -> C -> B -> O -->
+    <!-- A -> C -->
+    <line x1="160" y1="-100" x2="320" y2="0" class="dashed-line" />
+    <!-- B -> C -->
+    <line x1="160" y1="100" x2="320" y2="0" class="dashed-line" />
+    <!-- 平行四边形左下到右上？等等。O + A + B = (0,0) + (160,-100) + (160,100) = (320, 0). 是的。 -->
+    <!-- 所以 O, A, C, B 形成一个平行四边形。 -->
+    <!-- 在 C 点添加一个虚线圆点 -->
+    <circle cx="320" cy="0" r="4" fill="#888" stroke="#888" stroke-width="1.5" />
+
+    <!-- x 到超平面的垂线（绿色虚线） -->
+    <!-- 从 A(160, -100) 向下到 (160, 0) -->
+    <line x1="160" y1="-100" x2="160" y2="0" class="perp-line" />
+
+    <!-- 直角标记 -->
+    <!-- 在 (160, 0) 处，垂线与超平面相交 -->
+    <polyline points="150,-5 160,-5 160,5" class="right-angle" />
+
+    <!-- 标注“垂线” -->
+    <text x="60" y="-10" class="label-sm" fill="#00aaff" font-size="16">U</text>
+
+    <!-- 标注“反射” -->
+    <path d="M 50 -30 Q 70 -10 50 10" stroke="#888" stroke-width="1.5" fill="none" />
+    <text x="15" y="0" class="label-sm" fill="#888" font-size="16" transform="rotate(90, 15, 0)">反射</text>
+
+    <!-- 标注平行四边形 -->
+    <text x="200" y="-50" class="label-sm" fill="#888" font-size="14">2Proj_U X</text>
+  </g>
+</svg>

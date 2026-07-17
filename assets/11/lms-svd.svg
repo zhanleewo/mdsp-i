@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="550" height="420" viewBox="0 0 550 420">
+  <rect width="550" height="420" fill="#f8f9fa"/>
+  
+  <!-- x轴 -->
+  <line x1="60" y1="340" x2="500" y2="340" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="490" y="360" font-size="16" fill="#333">x</text>
+  
+  <!-- y轴 -->
+  <line x1="60" y1="340" x2="60" y2="40" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="40" y="50" font-size="16" fill="#333">y</text>
+  
+  <!-- 原点 -->
+  <text x="45" y="355" font-size="14" fill="#333">O</text>
+  
+  <!-- 45度直线 y = x，斜率=1，从原点延伸到右上角 -->
+  <line x1="60" y1="340" x2="460" y2="40" stroke="#D32F2F" stroke-width="3"/>
+  <text x="470" y="50" font-size="16" fill="#D32F2F">y = x（45°）</text>
+
+  
+  <line x1="320" y1="300" x2="240" y2="200" stroke="#D32F2F" stroke-width="3"/>
+  <line x1="120" y1="300" x2="120" y2="80" stroke="#D32F2F" stroke-width="3"/>
+  
+  <!-- 第一象限的随机点云 -->
+  <g fill="#3498DB" opacity="0.8">
+    <circle cx="120" fill="#00ff00" cy="80" r="5"/>
+    <circle cx="150" cy="120" r="5"/>
+    <circle cx="180" cy="60" r="5"/>
+    <circle cx="200" cy="180" r="5"/>
+    <circle cx="220" cy="100" r="5"/>
+    <circle cx="250" cy="50" r="5"/>
+    <circle cx="260" cy="200" r="5"/>
+    <circle cx="280" cy="140" r="5"/>
+    <circle cx="300" cy="80" r="5"/>
+    <circle cx="310" cy="220" r="5"/>
+    <circle cx="330" cy="160" r="5"/>
+    <circle cx="350" cy="100" r="5"/>
+    <circle cx="360" cy="240" r="5"/>
+    <circle cx="380" cy="180" r="5"/>
+    <circle cx="400" cy="120" r="5"/>
+    <circle cx="420" cy="60" r="5"/>
+    <circle cx="140" cy="200" r="5"/>
+    <circle cx="170" cy="280" r="5"/>
+    <circle cx="190" cy="220" r="5"/>
+    <circle cx="230" cy="280" r="5"/>
+    <circle cx="240" cy="160" r="5"/>
+    <circle cx="270" cy="300" r="5"/>
+    <circle cx="290" cy="250" r="5"/>
+    <circle cx="320" cy="300" fill="#ff0000"  r="5"/>
+    <circle cx="340" cy="280" r="5"/>
+    <circle cx="370" cy="260" r="5"/>
+    <circle cx="390" cy="220" r="5"/>
+    <circle cx="410" cy="180" r="5"/>
+    <circle cx="440" cy="140" r="5"/>
+    <circle cx="460" cy="100" r="5"/>
+    <circle cx="130" cy="140" r="5"/>
+    <circle cx="160" cy="160" r="5"/>
+    <circle cx="210" cy="140" r="5"/>
+    <circle cx="280" cy="200" r="5"/>
+    <circle cx="310" cy="120" r="5"/>
+    <circle cx="350" cy="200" r="5"/>
+    <circle cx="380" cy="140" r="5"/>
+    <circle cx="430" cy="100" r="5"/>
+    <circle cx="170" cy="180" r="5"/>
+    <circle cx="230" cy="220" r="5"/>
+    <circle cx="300" cy="280" r="5"/>
+    <circle cx="330" cy="240" r="5"/>
+    <circle cx="400" cy="200" r="5"/>
+    <circle cx="450" cy="80" r="5"/>
+    <circle cx="250" cy="240" r="5"/>
+    <circle cx="270" cy="180" r="5"/>
+    <circle cx="220" cy="260" r="5"/>
+    <circle cx="320" cy="180" r="5"/>
+    <circle cx="360" cy="120" r="5"/>
+    <circle cx="420" cy="220" r="5"/>
+    <circle cx="180" cy="100" r="5"/>
+  </g>
+  
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#333"/>
+    </marker>
+  </defs>
+</svg>

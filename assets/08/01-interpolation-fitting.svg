@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 400" width="100%" height="100%">
+  <rect width="700" height="400" fill="#f9f9f9"/>
+  <g transform="translate(60,20)">
+    <!-- 坐标轴 -->
+    <rect width="600" height="340" fill="none" stroke="#333" stroke-width="1.5"/>
+    <path d="M 50,280 L 550,280" stroke="#999" stroke-width="1" marker-end="url(#arrow)"/>
+    <path d="M 50,280 L 50,30" stroke="#999" stroke-width="1" marker-end="url(#arrow)"/>
+    <text x="550" y="300" font-size="14" fill="#333">x</text>
+    <text x="35" y="35" font-size="14" fill="#333">y</text>
+    
+    <!-- 训练数据点（与之前基本一致，略作调整以加剧振荡） -->
+    <circle cx="80" cy="250" r="5" fill="#3498DB"/>
+    <circle cx="130" cy="200" r="5" fill="#3498DB"/>
+    <circle cx="180" cy="240" r="5" fill="#3498DB"/>
+    <circle cx="220" cy="180" r="5" fill="#3498DB"/>
+    <circle cx="270" cy="160" r="5" fill="#3498DB"/>
+    <circle cx="320" cy="190" r="5" fill="#3498DB"/>
+    <circle cx="360" cy="140" r="5" fill="#3498DB"/>
+    <circle cx="400" cy="120" r="5" fill="#3498DB"/>
+    <circle cx="450" cy="110" r="5" fill="#3498DB"/>
+    <circle cx="500" cy="150" r="5" fill="#3498DB"/>
+    
+    <!-- 剧烈振荡的高次插值曲线（过拟合） -->
+    <path d="M 80,250 
+             C 90,210 110,180 130,200 
+             C 145,215 160,260 180,240 
+             C 195,225 205,170 220,180 
+             C 235,190 250,140 270,160 
+             C 285,175 300,220 320,190 
+             C 335,170 345,110 360,140 
+             C 375,165 385,90 400,120 
+             C 415,150 430,80 450,110 
+             C 465,135 480,180 500,150" 
+          stroke="#E67E22" stroke-width="2.5" fill="none"/>
+    
+    <!-- 平滑拟合曲线（正则化结果，低振荡） -->
+    <path d="M 80,250 Q 130,215 180,225 T 270,170 T 360,150 T 450,130 T 500,155" 
+          stroke="#27AE60" stroke-width="2.5" stroke-dasharray="6,4" fill="none"/>
+    
+    <!-- 图例 -->
+    <rect x="500" y="280" width="150" height="50" fill="#fff" stroke="#999"/>
+    <circle cx="515" cy="300" r="4" fill="#3498DB"/>
+    <text x="525" y="305" font-size="12" fill="#333">训练数据</text>
+    <path d="M 515,315 L 530,315" stroke="#E67E22" stroke-width="2"/>
+    <text x="535" y="320" font-size="12" fill="#333">插值曲线</text>
+    <path d="M 515,330 L 530,330" stroke="#27AE60" stroke-width="2" stroke-dasharray="6,4"/>
+    <text x="535" y="335" font-size="12" fill="#333">平滑拟合</text>
+  </g>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#999"/>
+    </marker>
+  </defs>
+</svg>

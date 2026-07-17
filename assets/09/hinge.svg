@@ -1,0 +1,83 @@
+<svg width="500" height="400" viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg">
+  <rect width="500" height="400" fill="#F8F9FA"/>
+  
+  <!-- 坐标轴 -->
+  <line x1="60" y1="300" x2="460" y2="300" stroke="#333" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="60" y1="300" x2="60" y2="60" stroke="#333" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="450" y="320" font-size="14" fill="#333">z = y f(x)</text>
+  <text x="40" y="70" font-size="14" fill="#333">L(z)</text>
+  
+  <!-- 刻度与标签 -->
+  <line x1="60" y1="300" x2="50" y2="300" stroke="#333" stroke-width="1"/>
+  <text x="45" y="305" text-anchor="end" font-size="12">0</text>
+  
+  <line x1="160" y1="300" x2="150" y2="300" stroke="#333" stroke-width="1"/>
+  <text x="150" y="305" text-anchor="end" font-size="12">1</text>
+  
+  <line x1="60" y1="200" x2="50" y2="200" stroke="#333" stroke-width="1"/>
+  <text x="45" y="205" text-anchor="end" font-size="12">1</text>
+  
+  <!-- Hinge 损失曲线 -->
+  <!-- 当 z >= 1 时，L=0 -->
+  <line x1="160" y1="300" x2="440" y2="300" stroke="#1E88E5" stroke-width="3"/>
+  
+  <!-- 当 z <= 1 时，L = 1 - z -->
+  <!-- 取两点：(z=0, L=1) -> (60,200) 和 (z=1, L=0) -> (160,300) -->
+  <!-- 当 z=-1, L=2 -> ( -1 对应 x=??  x 从 -2 到 2，坐标映射：z 范围 [-2,2] 对应 x 从 60 到 460，线性关系：x = 60 + (z+2)*100 -->
+  <!-- z=-1 -> x = 60 + 100 = 160?不对，计算：z=1时 x=160，z=-1时 x=60? 重新校准 -->
+  <!-- 设定 z 从 -1 到 1 映射 x 从 60 到 160 已画，但需要扩展左边 z 更小 -->
+  <!-- 更好的：z 从 -2 到 2 映射 x 从 60 到 460，线性：x = 60 + (z+2)*100，即 z=-2 -> x=60, z=-1 -> x=160, z=0 -> x=260, z=1 -> x=360, z=2 -> x=460 -->
+  <!-- 重新画坐标轴刻度 -->
+  <!-- 重画坐标轴刻度 -->
+  <line x1="60" y1="300" x2="460" y2="300" stroke="#333" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="60" y1="300" x2="60" y2="60" stroke="#333" stroke-width="1.5" marker-end="url(#arrow)"/>
+  
+  <!-- 调整刻度：z = -2, -1, 0, 1, 2 -->
+  <!-- x = 60, 160, 260, 360, 460 -->
+  <line x1="60" y1="300" x2="50" y2="300" stroke="#333" stroke-width="1"/>
+  <text x="50" y="305" text-anchor="end" font-size="12">-2</text>
+  
+  <line x1="160" y1="300" x2="150" y2="300" stroke="#333" stroke-width="1"/>
+  <text x="150" y="305" text-anchor="end" font-size="12">-1</text>
+  
+  <line x1="260" y1="300" x2="250" y2="300" stroke="#333" stroke-width="1"/>
+  <text x="250" y="305" text-anchor="end" font-size="12">0</text>
+  
+  <line x1="360" y1="300" x2="350" y2="300" stroke="#333" stroke-width="1"/>
+  <text x="350" y="305" text-anchor="end" font-size="12">1</text>
+  
+  <line x1="460" y1="300" x2="450" y2="300" stroke="#333" stroke-width="1"/>
+  <text x="450" y="305" text-anchor="end" font-size="12">2</text>
+  
+  <!-- 纵轴刻度：L=1 对应 y=200 -->
+  <line x1="60" y1="200" x2="50" y2="200" stroke="#333" stroke-width="1"/>
+  <text x="45" y="205" text-anchor="end" font-size="12">1</text>
+  <line x1="60" y1="100" x2="50" y2="100" stroke="#333" stroke-width="1"/>
+  <text x="45" y="105" text-anchor="end" font-size="12">2</text>
+  
+  <!-- Hinge 损失曲线 -->
+  <!-- 当 z <= 1 时，L = 1 - z，注意 z 从 -2 到 1 映射 L 从 3 到 0 -->
+  <!-- z=-2, L=3 -> (60,0)?? 不对 L=3 对应 y= 300 - 3*100 = 0 -->
+  <!-- 画点：z=-2 L=3 -> (60,0); z=-1 L=2 -> (160,100); z=0 L=1 -> (260,200); z=1 L=0 -> (360,300) -->
+  <!-- 连接这四段 -->
+  <line x1="60" y1="0" x2="160" y2="100" stroke="#1E88E5" stroke-width="3"/>
+  <line x1="160" y1="100" x2="260" y2="200" stroke="#1E88E5" stroke-width="3"/>
+  <line x1="260" y1="200" x2="360" y2="300" stroke="#1E88E5" stroke-width="3"/>
+  
+  <!-- 当 z >= 1 时，L=0 -->
+  <line x1="360" y1="300" x2="460" y2="300" stroke="#1E88E5" stroke-width="3"/>
+  
+  <!-- 标注 hinge 损失表达式 -->
+  <text x="300" y="60" font-size="14" fill="#1E88E5">L(z) = max(0, 1 - z)</text>
+  <text x="300" y="80" font-size="12" fill="#333">z = y f(x)</text>
+  
+  <!-- 转折点标注 -->
+  <circle cx="360" cy="300" r="3" fill="#1E88E5"/>
+  <text x="370" y="295" font-size="12" fill="#1E88E5">(1,0)</text>
+  
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#333"/>
+    </marker>
+  </defs>
+</svg>

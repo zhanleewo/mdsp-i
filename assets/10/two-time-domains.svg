@@ -1,0 +1,62 @@
+<svg width="700" height="300" viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg">
+  <rect width="700" height="300" fill="#f8f9fa"/>
+  
+  <!-- 时间轴 -->
+  <line x1="50" y1="250" x2="650" y2="250" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="660" y="260" font-size="14">时刻 k</text>
+  
+  <!-- 时刻标记 -->
+  <circle cx="120" cy="250" r="4" fill="#333"/>
+  <text x="115" y="270" font-size="12">1</text>
+  <circle cx="280" cy="250" r="4" fill="#333"/>
+  <text x="275" y="270" font-size="12">2</text>
+  <circle cx="440" cy="250" r="4" fill="#333"/>
+  <text x="435" y="270" font-size="12">3</text>
+  <circle cx="600" cy="250" r="4" fill="#333"/>
+  <text x="595" y="270" font-size="12">4</text>
+  
+  <!-- 错误做法：每个时刻完整迭代 -->
+  <!-- 时刻1的迭代 -->
+  <text x="120" y="50" text-anchor="middle" font-size="12" fill="#D32F2F">时刻1: 完整迭代</text>
+  <circle cx="90" cy="80" r="8" fill="#D32F2F" opacity="0.6"/>
+  <circle cx="120" cy="60" r="8" fill="#D32F2F" opacity="0.8"/>
+  <circle cx="150" cy="80" r="8" fill="#D32F2F" opacity="0.6"/>
+  <text x="120" y="110" text-anchor="middle" font-size="10">ω₀→ω₁→…→ω*</text>
+  
+  <!-- 箭头 -->
+  <path d="M 120 110 L 120 250" stroke="#D32F2F" stroke-width="1.5" stroke-dasharray="4,4"/>
+  
+  <!-- 时刻2的迭代 -->
+  <text x="280" y="50" text-anchor="middle" font-size="12" fill="#D32F2F">时刻2: 完整迭代</text>
+  <circle cx="250" cy="80" r="8" fill="#D32F2F" opacity="0.6"/>
+  <circle cx="280" cy="60" r="8" fill="#D32F2F" opacity="0.8"/>
+  <circle cx="310" cy="80" r="8" fill="#D32F2F" opacity="0.6"/>
+  <text x="280" y="110" text-anchor="middle" font-size="10">ω₀→ω₁→…→ω*</text>
+  <path d="M 280 110 L 280 250" stroke="#D32F2F" stroke-width="1.5" stroke-dasharray="4,4"/>
+  
+  <!-- 时刻3的迭代 -->
+  <text x="440" y="50" text-anchor="middle" font-size="12" fill="#D32F2F">时刻3: 完整迭代</text>
+  <circle cx="410" cy="80" r="8" fill="#D32F2F" opacity="0.6"/>
+  <circle cx="440" cy="60" r="8" fill="#D32F2F" opacity="0.8"/>
+  <circle cx="470" cy="80" r="8" fill="#D32F2F" opacity="0.6"/>
+  <text x="440" y="110" text-anchor="middle" font-size="10">ω₀→ω₁→…→ω*</text>
+  <path d="M 440 110 L 440 250" stroke="#D32F2F" stroke-width="1.5" stroke-dasharray="4,4"/>
+  
+  <!-- 时刻4的迭代 -->
+  <text x="600" y="50" text-anchor="middle" font-size="12" fill="#D32F2F">时刻4: 完整迭代</text>
+  <circle cx="570" cy="80" r="8" fill="#D32F2F" opacity="0.6"/>
+  <circle cx="600" cy="60" r="8" fill="#D32F2F" opacity="0.8"/>
+  <circle cx="630" cy="80" r="8" fill="#D32F2F" opacity="0.6"/>
+  <text x="600" y="110" text-anchor="middle" font-size="10">ω₀→ω₁→…→ω*</text>
+  <path d="M 600 110 L 600 250" stroke="#D32F2F" stroke-width="1.5" stroke-dasharray="4,4"/>
+  
+  <!-- 标注 -->
+  <rect x="100" y="140" width="500" height="40" rx="5" fill="#FFEBEE" stroke="#D32F2F" stroke-width="1.5"/>
+  <text x="350" y="165" text-anchor="middle" font-size="14" fill="#D32F2F">问题：每个时刻完整迭代 → 收敛后数据已变化 → 刻舟求剑</text>
+  
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#333"/>
+    </marker>
+  </defs>
+</svg>

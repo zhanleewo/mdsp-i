@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="400" viewBox="0 0 500 400">
+  <rect width="500" height="400" fill="#f8f9fa"/>
+  
+  <!-- 列空间平面 -->
+  <polygon points="150,320 450,320 480,80 180,80" fill="#E3F2FD" stroke="#1E88E5" stroke-width="2"/>
+  <text x="300" y="350" text-anchor="middle" font-size="14" fill="#1E88E5">Col(A)（列空间）</text>
+  
+  <!-- 向量 b -->
+  <line x1="220" y1="300" x2="380" y2="100" stroke="#D32F2F" stroke-width="3" marker-end="url(#arrowRed)"/>
+  <text x="390" y="100" font-size="16" fill="#D32F2F">b</text>
+  
+  <!-- 投影 p = Aω -->
+  <line x1="220" y1="300" x2="330" y2="200" stroke="#1E88E5" stroke-width="3" marker-end="url(#arrowBlue)"/>
+  <text x="310" y="195" font-size="16" fill="#1E88E5">p</text>
+  
+  <!-- 残差 e = b - p -->
+  <line x1="330" y1="200" x2="380" y2="100" stroke="#E53935" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrowE)"/>
+  <text x="385" y="160" font-size="14" fill="#E53935">e</text>
+  
+  <!-- 直角符号 -->
+  <path d="M 330,200 L 330,210 L 340,210" stroke="#333" stroke-width="2" fill="none"/>
+  
+  <!-- 图例 -->
+  <text x="20" y="40" font-size="12" fill="#333">红色：目标向量 b</text>
+  <text x="20" y="55" font-size="12" fill="#333">蓝色：投影 p = Aω（在列空间上）</text>
+  <text x="20" y="70" font-size="12" fill="#333">虚线：残差 e，垂直于列空间</text>
+  
+  <defs>
+    <marker id="arrowRed" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#D32F2F"/>
+    </marker>
+    <marker id="arrowBlue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1E88E5"/>
+    </marker>
+    <marker id="arrowE" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#E53935"/>
+    </marker>
+  </defs>
+</svg>

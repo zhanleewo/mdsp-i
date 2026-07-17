@@ -1,0 +1,51 @@
+<svg width="650" height="450" viewBox="0 0 650 450" xmlns="http://www.w3.org/2000/svg">
+  <rect width="650" height="450" fill="#f8f9fa"/>
+  
+  <!-- 坐标轴 -->
+  <line x1="80" y1="370" x2="620" y2="370" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="80" y1="370" x2="80" y2="30" stroke="#333" stroke-width="2" marker-end="url(#arrow)"/>
+  
+  <!-- 轴标签 -->
+  <text x="610" y="385" font-size="14" fill="#333">问题时间域 (时刻 k)</text>
+  <text x="60" y="35" font-size="14" fill="#333">优化时间域</text>
+  <text x="60" y="50" font-size="14" fill="#333">(迭代步 l)</text>
+  
+  <!-- 原点 -->
+  <text x="70" y="390" font-size="12">O</text>
+  
+  <!-- 45°斜线 -->
+  <line x1="80" y1="370" x2="580" y2="70" stroke="#1E88E5" stroke-width="3" />
+  
+  <!-- 斜线上的点：每个时刻对应一步迭代 -->
+  <!-- 时刻1，迭代1 -->
+  <circle cx="180" cy="270" r="7" fill="#1E88E5"/>
+  <text x="190" y="265" font-size="11">(1,1)</text>
+  
+  <!-- 时刻2，迭代2 -->
+  <circle cx="280" cy="220" r="7" fill="#1E88E5"/>
+  <text x="290" y="215" font-size="11">(2,2)</text>
+  
+  <!-- 时刻3，迭代3 -->
+  <circle cx="380" cy="170" r="7" fill="#1E88E5"/>
+  <text x="390" y="165" font-size="11">(3,3)</text>
+  
+  <!-- 时刻4，迭代4 -->
+  <circle cx="480" cy="120" r="7" fill="#1E88E5"/>
+  <text x="490" y="115" font-size="11">(4,4)</text>
+  
+  <!-- 标注演化方向 -->
+  <text x="530" y="100" font-size="12" fill="#1E88E5" font-style="italic">ω 演化路径</text>
+  
+  <!-- 从原点到第一个点的连接 -->
+  <text x="130" y="300" font-size="11" fill="#1E88E5">第1步迭代用第1时刻数据</text>
+  
+  <!-- 注释框 -->
+  <rect x="90" y="400" width="470" height="35" rx="5" fill="#E3F2FD" stroke="#1E88E5" stroke-width="1.5"/>
+  <text x="325" y="423" text-anchor="middle" font-size="13" fill="#1E88E5">正确做法：第 l 步迭代用第 l 个时刻数据 → 两域耦合 → 自适应</text>
+  
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#333"/>
+    </marker>
+  </defs>
+</svg>

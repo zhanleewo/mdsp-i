@@ -1,0 +1,40 @@
+<svg width="500" height="400" viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg">
+  <rect width="500" height="400" fill="#f8f9fa"/>
+  
+  <!-- 坐标轴 -->
+  <line x1="50" y1="200" x2="450" y2="200" stroke="#333" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <line x1="250" y1="50" x2="250" y2="350" stroke="#333" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="445" y="205" font-size="14">θ₁</text>
+  <text x="255" y="55" font-size="14">θ₂</text>
+  
+  <!-- 岭回归：L2圆 (半径为80) -->
+  <circle cx="250" cy="200" r="80" fill="none" stroke="#1E88E5" stroke-width="2.5"/>
+  <text x="250" y="110" text-anchor="middle" font-size="12" fill="#1E88E5">L2球（岭回归）</text>
+  
+  <!-- LASSO：L1菱形 (顶点距离原点80) -->
+  <polygon points="250,120 330,200 250,280 170,200" fill="none" stroke="#E67E22" stroke-width="2.5"/>
+  <text x="250" y="90" text-anchor="middle" font-size="12" fill="#E67E22">L1菱形（LASSO）</text>
+  
+  <!-- 目标函数等高线（平行线，斜率 = -0.5） -->
+  <!-- 第一条线：与圆相切（切点大约在 (210, 160) 附近，计算圆心到直线距离=80） -->
+  <!-- 方程：θ₂ = -0.5 θ₁ + b，距离 |b - 200| / sqrt(1+0.25) = 80 => |b-200| = 80 * sqrt(1.25) ≈ 89.44 -->
+  <!-- 取 b = 200 + 89.44 = 289.44 时，直线在圆上方相切，切点不在轴上 -->
+  <line x1="60" y1="204" x2="400" y2="34" stroke="#D32F2F" stroke-width="2" stroke-dasharray="6,4"/>
+  <text x="320" y="95" font-size="12" fill="#D32F2F">等高线（与圆相切）</text>
+  
+  <!-- 第二条线：通过菱形上顶点 (250,120)，斜率相同 -->
+  <!-- 方程：θ₂ - 120 = -0.5 (θ₁ - 250) => θ₂ = -0.5 θ₁ + 245 -->
+  <!-- 画线通过 (250,120) 和 (400, -25) 等 -->
+  <line x1="100" y1="195" x2="440" y2="25" stroke="#D32F2F" stroke-width="2" stroke-dasharray="6,4" stroke-opacity="0.6"/>
+  <text x="360" y="30" font-size="12" fill="#D32F2F">等高线（经过L1顶点）</text>
+  
+  <!-- 标记顶点 -->
+  <circle cx="250" cy="120" r="5" fill="#000"/>
+  <text x="260" y="115" font-size="12">顶点</text>
+  
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#333"/>
+    </marker>
+  </defs>
+</svg>
