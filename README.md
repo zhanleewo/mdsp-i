@@ -101,5 +101,5 @@
 
 
 ## 关于文字稿
-如下图所示，我只是将公式和关键说明输入DeepSeek，文字稿全部由AI生成
+如下图所示，我只是将公式和关键说明输入DeepSeek，文字稿初稿全部由AI生成，随后由我对照课程人工校对。
 <img width="2552" height="1766" alt="image" src="https://github.com/user-attachments/assets/514349e8-dd89-4256-a318-cde154542b60" />
