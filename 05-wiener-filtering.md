@@ -218,7 +218,9 @@ H(\omega) = \frac{S_{YX}(\omega)}{S_{XX}(\omega)}  \tag{5.9}$$
 
    因此
    $$
-   J(a) = \mathbb{E}[\theta^2] + \big[ (a - R^{-1}r)^\top R (a - R^{-1}r) - r^\top R^{-1} r \big] = \mathbb{E}[\theta^2] - r^\top R^{-1} r + (a - R^{-1}r)^\top R (a - R^{-1}r).  \tag{5.27}$$
+   \begin{aligned}
+   J(a) &= \mathbb{E}[\theta^2] + \big[ (a - R^{-1}r)^\top R (a - R^{-1}r) - r^\top R^{-1} r \big] \\
+   & = \mathbb{E}[\theta^2] - r^\top R^{-1} r + (a - R^{-1}r)^\top R (a - R^{-1}r).\end{aligned}  \tag{5.27}$$
 
    由于 $R$ 正定，$(a - R^{-1}r)^\top R (a - R^{-1}r) \ge 0$，等号成立当且仅当 $a = R^{-1}r$。所以最优系数为 $a_{\text{opt}} = R^{-1}r = \boxed{R_{XX}^{-1} r_{X\theta}}$，此时最小均方误差为 $$
    J_{\min} = \mathbb{E}[\theta^2] - r^\top R^{-1} r = \underset{降低方差}{\boxed{\mathbb{E}[\theta^2] - r_{X\theta}^\top R_{XX}^{-1} r_{X\theta} \le \mathbb{E}[\theta^2]}} .  \tag{5.28}$$
@@ -403,7 +405,10 @@ $$
 #### 3.3.5 充分性（正交条件保证最优性）
 
 反过来，如果某个 $a$ 满足 $\mathbb{E}[(Y - a^\top X) X] = 0$，那么对任意其他 $b$，令 $e = Y - a^\top X$，则 $$
-\mathbb{E}[(Y - b^\top X)^2] = \mathbb{E}[ (e + (a - b)^\top X)^2 ] = \mathbb{E}[e^2] + \mathbb{E}[((a-b)^\top X)^2] + 2 (a-b)^\top \underbrace{\mathbb{E}[e X]}_{=0}.  \tag{5.52}$$
+\begin{aligned}
+\mathbb{E}[(Y - b^\top X)^2] &= \mathbb{E}[ (e + (a - b)^\top X)^2 ] \\
+&= \mathbb{E}[e^2] + \mathbb{E}[((a-b)^\top X)^2] + 2 (a-b)^\top \underbrace{\mathbb{E}[e X]}_{=0}.
+\end{aligned}  \tag{5.52}$$
 由于第二项非负，所以 $\mathbb{E}[e^2] \le \mathbb{E}[(Y - b^\top X)^2]$，即 $a$ 是最优的。因此正交条件也是充分的。
 
 #### 3.3.6 物理意义

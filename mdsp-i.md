@@ -232,10 +232,17 @@ $$
   $$
   P(A \cup B) = P(A) + P(B) - P(A \cap B).   \tag{1.3}$$
   对三个事件 $A, B, C$， $$
-  P(A \cup B \cup C) = P(A) + P(B) + P(C) - P(A\cap B) - P(A\cap C) - P(B\cap C) + P(A\cap B\cap C).   \tag{1.4}$$
+  \begin{aligned}
+  P(A \cup B \cup C) =& P(A) + P(B) + P(C) - P(A\cap B) \\
+&- P(A\cap C) - P(B\cap C) + P(A\cap B\cap C). 
+  \end{aligned}  \tag{1.4}$$
   更一般地，对 $n$ 个事件，
   $$
-  P\left( \bigcup_{i=1}^n A_i \right) = \sum_{i=1}^n P(A_i) - \sum_{1\le i<j\le n} P(A_i\cap A_j) + \sum_{1\le i<j<k\le n} P(A_i\cap A_j\cap A_k) - \cdots + (-1)^{n-1} P(A_1\cap\cdots\cap A_n).   \tag{1.5}$$
+  \begin{aligned}
+  P\left( \bigcup_{i=1}^n A_i \right) =& \sum_{i=1}^n P(A_i) - \sum_{1\le i<j\le n} P(A_i\cap A_j) + \sum_{1\le i<j<k\le n} P(A_i\cap A_j\cap A_k) \\
+&-\cdots + (-1)^{n-1} P(A_1\cap\cdots\cap A_n).   
+  \end{aligned}
+  \tag{1.5}$$
 
 #### 2.2.2 容斥原理的应用：匹配问题（戴帽子问题）
 
@@ -1068,7 +1075,15 @@ $$ E\left[ E[X|Y] \right] = E[X]    \tag{1.87}$$
 **证明**：考虑连续型情形，用条件密度 $f_{X|Y}(x|y)$ 表示：
 $$ E[X|Y=y] = \int x f_{X|Y}(x|y)dx    \tag{1.88}$$
 则
-$$ E[E[X|Y]] = \int E[X|Y=y] f_Y(y) dy = \iint x f_{X|Y}(x|y) f_Y(y) dx dy = \int x \left( \int f_{X,Y}(x,y) dy \right) dx = \int x f_X(x) dx = E[X]    \tag{1.89}$$
+$$
+\begin{aligned} 
+E[E[X|Y]] &= \int E[X|Y=y] f_Y(y) dy \\
+&= \iint x f_{X|Y}(x|y) f_Y(y) dx dy \\ 
+&= \int x \left( \int f_{X,Y}(x,y) dy \right) dx \\
+&= \int x f_X(x) dx \\
+&= E[X]   
+\end{aligned}
+\tag{1.89}$$
 离散型类似，只需将积分换为求和。这一公式也叫**重期望定理**（Law of Total Expectation），它的直观意义是：将全体按 $Y$ 分层，先计算每层的平均，再按层的大小的概率加权平均，就回到总平均。这与 6.2 节性质5 一致。
 
 **性质 4：提取已知量**
@@ -2284,7 +2299,7 @@ $X_1, X_2 \overset{\text{i.i.d.}}{\sim} N(0, 1)$，取 $\hat{\theta}(X_1, X_2) =
 
 在无约束下无法找到一致最优估计。若附加无偏性条件 $\mathbb{E}[\hat{\theta}] = \theta$，则 $$
 \operatorname{MSE}(\hat{\theta}) = \mathbb{E}[(\hat{\theta} - \theta)^2] = \mathbb{E}[(\hat{\theta} - \mathbb{E}[\hat{\theta}])^2] = \operatorname{Var}(\hat{\theta}),  \tag{3.2}$$  
-此时最小化 MSE 等价于最小化方差。这就是**最小方差无偏估计（UMVUE）**问题。
+此时最小化 MSE 等价于最小化方差。这就是 **最小方差无偏估计（UMVUE）** 问题。
 
 ---
 
@@ -2360,7 +2375,7 @@ $$
 \boxed{\operatorname{Var}(\hat{\theta}) = \mathbb{E}\big[\operatorname{Var}(\hat{\theta} \mid s)\big] + \operatorname{Var}\big(\mathbb{E}(\hat{\theta} \mid s)\big)}.  \tag{3.18}$$  
 
 $$
-\overset{E[\hat{\theta} - \theta]^2}{\boxed{Var(\hat{\theta})}} = \overset{Var(\hat{\theta}^{'}) = E[\hat{\theta}^{'} - \theta]^2}{\boxed{Var(E[\hat{\theta}|s(x)])}} + \overset{非负}{\boxed {E[Var(\hat{\theta|s(x)})]}}  \tag{3.19}$$
+\overset{E[\hat{\theta} - \theta]^2}{\boxed{Var(\hat{\theta})}} = \overset{Var(\hat{\theta}^{'}) = E[\hat{\theta}^{'} - \theta]^2}{\boxed{Var(E[\hat{\theta}|s(x)])}} + \overset{非负}{\boxed {E[Var(\hat{\theta}|s(x))]}}  \tag{3.19}$$
 
 由于 $\mathbb{E}\big[\operatorname{Var}(\hat{\theta} \mid s)\big] \ge 0$，所以 $$
 \operatorname{Var}(\hat{\theta}') = \operatorname{Var}\big(\mathbb{E}(\hat{\theta}\mid s)\big) \le \operatorname{Var}(\hat{\theta}).  \tag{3.20}$$  
@@ -4221,7 +4236,9 @@ H(\omega) = \frac{S_{YX}(\omega)}{S_{XX}(\omega)}  \tag{5.9}$$
 
    因此
    $$
-   J(a) = \mathbb{E}[\theta^2] + \big[ (a - R^{-1}r)^\top R (a - R^{-1}r) - r^\top R^{-1} r \big] = \mathbb{E}[\theta^2] - r^\top R^{-1} r + (a - R^{-1}r)^\top R (a - R^{-1}r).  \tag{5.27}$$
+   \begin{aligned}
+   J(a) &= \mathbb{E}[\theta^2] + \big[ (a - R^{-1}r)^\top R (a - R^{-1}r) - r^\top R^{-1} r \big] \\
+   & = \mathbb{E}[\theta^2] - r^\top R^{-1} r + (a - R^{-1}r)^\top R (a - R^{-1}r).\end{aligned}  \tag{5.27}$$
 
    由于 $R$ 正定，$(a - R^{-1}r)^\top R (a - R^{-1}r) \ge 0$，等号成立当且仅当 $a = R^{-1}r$。所以最优系数为 $a_{\text{opt}} = R^{-1}r = \boxed{R_{XX}^{-1} r_{X\theta}}$，此时最小均方误差为 $$
    J_{\min} = \mathbb{E}[\theta^2] - r^\top R^{-1} r = \underset{降低方差}{\boxed{\mathbb{E}[\theta^2] - r_{X\theta}^\top R_{XX}^{-1} r_{X\theta} \le \mathbb{E}[\theta^2]}} .  \tag{5.28}$$
@@ -4406,7 +4423,10 @@ $$
 #### 3.3.5 充分性（正交条件保证最优性）
 
 反过来，如果某个 $a$ 满足 $\mathbb{E}[(Y - a^\top X) X] = 0$，那么对任意其他 $b$，令 $e = Y - a^\top X$，则 $$
-\mathbb{E}[(Y - b^\top X)^2] = \mathbb{E}[ (e + (a - b)^\top X)^2 ] = \mathbb{E}[e^2] + \mathbb{E}[((a-b)^\top X)^2] + 2 (a-b)^\top \underbrace{\mathbb{E}[e X]}_{=0}.  \tag{5.52}$$
+\begin{aligned}
+\mathbb{E}[(Y - b^\top X)^2] &= \mathbb{E}[ (e + (a - b)^\top X)^2 ] \\
+&= \mathbb{E}[e^2] + \mathbb{E}[((a-b)^\top X)^2] + 2 (a-b)^\top \underbrace{\mathbb{E}[e X]}_{=0}.
+\end{aligned}  \tag{5.52}$$
 由于第二项非负，所以 $\mathbb{E}[e^2] \le \mathbb{E}[(Y - b^\top X)^2]$，即 $a$ 是最优的。因此正交条件也是充分的。
 
 #### 3.3.6 物理意义
@@ -6510,7 +6530,10 @@ $$
 f_X^*(x) - y = \bigl( f_X^*(x) - \bar{f}(x) \bigr) + \bigl( \bar{f}(x) - y \bigr).   \tag{8.13}$$
 平方并取关于 $X$ 和 $(x,y)$ 的期望：
 $$
-\mathbb{E}_{X,x,y} \bigl( f_X^*(x) - y \bigr)^2 = \mathbb{E}_{x,y} \left[ \mathbb{E}_X \bigl( f_X^*(x) - \bar{f}(x) \bigr)^2 \right] + \mathbb{E}_{x,y} \bigl( \bar{f}(x) - y \bigr)^2 + 2 \mathbb{E}_{x,y} \left[ \bigl( \bar{f}(x) - y \bigr) \mathbb{E}_X \bigl( f_X^*(x) - \bar{f}(x) \bigr)\right].   \tag{8.14}$$
+\begin{aligned}
+\mathbb{E}_{X,x,y} \bigl( f_X^*(x) - y \bigr)^2 =& \mathbb{E}_{x,y} \left[ \mathbb{E}_X \bigl( f_X^*(x) - \bar{f}(x) \bigr)^2 \right] + \mathbb{E}_{x,y} \bigl( \bar{f}(x) - y \bigr)^2 \\
+& + 2 \mathbb{E}_{x,y} \left[ \bigl( \bar{f}(x) - y \bigr) \mathbb{E}_X \bigl( f_X^*(x) - \bar{f}(x) \bigr)\right].
+\end{aligned}   \tag{8.14}$$
 由于 $\mathbb{E}_X[ f_X^*(x) - \bar{f}(x) ] = 0$，交叉项为零。因此：
 $$
 \mathbb{E}_X\bigl[C_2[f_X^*]\bigr] = \mathbb{E}_{x,y} \bigl( \bar{f}(x) - y \bigr)^2 + \mathbb{E}_x \left[ \operatorname{Var}_X\bigl( f_X^*(x) \bigr) \right].   \tag{8.15}$$
@@ -9420,7 +9443,10 @@ A^{-1} (A + B C D) = A^{-1} A + A^{-1} B CD = I + A^{-1} B C D.   \tag{11.40}$$
 
 所以第二项为：
 $$
-X (D X + C^{-1})^{-1} D \cdot (I + X C D) = X (D X + C^{-1})^{-1} D + X (D X +C^{-1})^{-1} D X C D.   \tag{11.41}$$
+\begin{aligned}
+&X (D X + C^{-1})^{-1} D \cdot (I + X C D) \\
+=& X (D X + C^{-1})^{-1} D + X (D X +C^{-1})^{-1} D X C D.
+\end{aligned}   \tag{11.41}$$
 
 ---
 
@@ -9430,7 +9456,7 @@ X (D X + C^{-1})^{-1} D \cdot (I + X C D) = X (D X + C^{-1})^{-1} D + X (D X +C^
 $$
 \begin{aligned}
 & (I + X C D) - X (D X + C^{-1})^{-1} D - X (D X + C^{-1})^{-1} D X C D \\
-&= I + X C D - X (D X + C^{-1})^{-1} (D + D X C D).
+=& I + X C D - X (D X + C^{-1})^{-1} (D + D X C D).
 \end{aligned}   \tag{11.42}$$
 
 注意到：
@@ -9469,7 +9495,9 @@ I + B C X - B M^{-1} D A^{-1} - B C X M^{-1} D A^{-1}.   \tag{11.48}$$
 
 由于 \(M = X + C^{-1}\)，我们有：
 $$
-B C X - B C X M^{-1} D A^{-1} = B C X (I - M^{-1} D A^{-1}) = B C X (I -(X + C^{-1})^{-1} X).   \tag{11.49}$$
+\begin{aligned}
+& B C X - B C X M^{-1} D A^{-1} \\
+=& B C X (I - M^{-1} D A^{-1}) = B C X (I -(X + C^{-1})^{-1} X).\end{aligned}   \tag{11.49}$$
 
 利用矩阵恒等式：\(I - (X + C^{-1})^{-1} X = (X + C^{-1})^{-1} C^{-1}\)。
 
@@ -10053,7 +10081,10 @@ $$
 
 代入 Woodbury 恒等式：
 $$
-\phi^{-1}(n) = (\lambda \phi(n-1))^{-1} - (\lambda \phi(n-1))^{-1} X(n) \left( 1 + X^\top(n) (\lambda \phi(n-1))^{-1} X(n) \right)^{-1} X^\top(n) (\lambda \phi(n-1))^{-1}.   \tag{11.117}$$
+\begin{aligned}
+& \phi^{-1}(n) = (\lambda \phi(n-1))^{-1} \\ 
+&- (\lambda \phi(n-1))^{-1} X(n) \left( 1 + X^\top(n) (\lambda \phi(n-1))^{-1} X(n) \right)^{-1} X^\top(n) (\lambda \phi(n-1))^{-1}.
+\end{aligned}   \tag{11.117}$$
 
 简化：
 $$

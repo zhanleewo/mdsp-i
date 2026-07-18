@@ -40,7 +40,7 @@ $X_1, X_2 \overset{\text{i.i.d.}}{\sim} N(0, 1)$，取 $\hat{\theta}(X_1, X_2) =
 
 在无约束下无法找到一致最优估计。若附加无偏性条件 $\mathbb{E}[\hat{\theta}] = \theta$，则 $$
 \operatorname{MSE}(\hat{\theta}) = \mathbb{E}[(\hat{\theta} - \theta)^2] = \mathbb{E}[(\hat{\theta} - \mathbb{E}[\hat{\theta}])^2] = \operatorname{Var}(\hat{\theta}),  \tag{3.2}$$  
-此时最小化 MSE 等价于最小化方差。这就是**最小方差无偏估计（UMVUE）**问题。
+此时最小化 MSE 等价于最小化方差。这就是 **最小方差无偏估计（UMVUE）** 问题。
 
 ---
 
@@ -116,7 +116,7 @@ $$
 \boxed{\operatorname{Var}(\hat{\theta}) = \mathbb{E}\big[\operatorname{Var}(\hat{\theta} \mid s)\big] + \operatorname{Var}\big(\mathbb{E}(\hat{\theta} \mid s)\big)}.  \tag{3.18}$$  
 
 $$
-\overset{E[\hat{\theta} - \theta]^2}{\boxed{Var(\hat{\theta})}} = \overset{Var(\hat{\theta}^{'}) = E[\hat{\theta}^{'} - \theta]^2}{\boxed{Var(E[\hat{\theta}|s(x)])}} + \overset{非负}{\boxed {E[Var(\hat{\theta|s(x)})]}}  \tag{3.19}$$
+\overset{E[\hat{\theta} - \theta]^2}{\boxed{Var(\hat{\theta})}} = \overset{Var(\hat{\theta}^{'}) = E[\hat{\theta}^{'} - \theta]^2}{\boxed{Var(E[\hat{\theta}|s(x)])}} + \overset{非负}{\boxed {E[Var(\hat{\theta}|s(x))]}}  \tag{3.19}$$
 
 由于 $\mathbb{E}\big[\operatorname{Var}(\hat{\theta} \mid s)\big] \ge 0$，所以 $$
 \operatorname{Var}(\hat{\theta}') = \operatorname{Var}\big(\mathbb{E}(\hat{\theta}\mid s)\big) \le \operatorname{Var}(\hat{\theta}).  \tag{3.20}$$  

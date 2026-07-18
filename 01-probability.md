@@ -88,10 +88,17 @@ $$
   $$
   P(A \cup B) = P(A) + P(B) - P(A \cap B).   \tag{1.3}$$
   对三个事件 $A, B, C$， $$
-  P(A \cup B \cup C) = P(A) + P(B) + P(C) - P(A\cap B) - P(A\cap C) - P(B\cap C) + P(A\cap B\cap C).   \tag{1.4}$$
+  \begin{aligned}
+  P(A \cup B \cup C) =& P(A) + P(B) + P(C) - P(A\cap B) \\
+&- P(A\cap C) - P(B\cap C) + P(A\cap B\cap C). 
+  \end{aligned}  \tag{1.4}$$
   更一般地，对 $n$ 个事件，
   $$
-  P\left( \bigcup_{i=1}^n A_i \right) = \sum_{i=1}^n P(A_i) - \sum_{1\le i<j\le n} P(A_i\cap A_j) + \sum_{1\le i<j<k\le n} P(A_i\cap A_j\cap A_k) - \cdots + (-1)^{n-1} P(A_1\cap\cdots\cap A_n).   \tag{1.5}$$
+  \begin{aligned}
+  P\left( \bigcup_{i=1}^n A_i \right) =& \sum_{i=1}^n P(A_i) - \sum_{1\le i<j\le n} P(A_i\cap A_j) + \sum_{1\le i<j<k\le n} P(A_i\cap A_j\cap A_k) \\
+&-\cdots + (-1)^{n-1} P(A_1\cap\cdots\cap A_n).   
+  \end{aligned}
+  \tag{1.5}$$
 
 #### 2.2.2 容斥原理的应用：匹配问题（戴帽子问题）
 
@@ -924,7 +931,15 @@ $$ E\left[ E[X|Y] \right] = E[X]    \tag{1.87}$$
 **证明**：考虑连续型情形，用条件密度 $f_{X|Y}(x|y)$ 表示：
 $$ E[X|Y=y] = \int x f_{X|Y}(x|y)dx    \tag{1.88}$$
 则
-$$ E[E[X|Y]] = \int E[X|Y=y] f_Y(y) dy = \iint x f_{X|Y}(x|y) f_Y(y) dx dy = \int x \left( \int f_{X,Y}(x,y) dy \right) dx = \int x f_X(x) dx = E[X]    \tag{1.89}$$
+$$
+\begin{aligned} 
+E[E[X|Y]] &= \int E[X|Y=y] f_Y(y) dy \\
+&= \iint x f_{X|Y}(x|y) f_Y(y) dx dy \\ 
+&= \int x \left( \int f_{X,Y}(x,y) dy \right) dx \\
+&= \int x f_X(x) dx \\
+&= E[X]   
+\end{aligned}
+\tag{1.89}$$
 离散型类似，只需将积分换为求和。这一公式也叫**重期望定理**（Law of Total Expectation），它的直观意义是：将全体按 $Y$ 分层，先计算每层的平均，再按层的大小的概率加权平均，就回到总平均。这与 6.2 节性质5 一致。
 
 **性质 4：提取已知量**

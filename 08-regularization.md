@@ -201,7 +201,10 @@ $$
 f_X^*(x) - y = \bigl( f_X^*(x) - \bar{f}(x) \bigr) + \bigl( \bar{f}(x) - y \bigr).   \tag{8.13}$$
 平方并取关于 $X$ 和 $(x,y)$ 的期望：
 $$
-\mathbb{E}_{X,x,y} \bigl( f_X^*(x) - y \bigr)^2 = \mathbb{E}_{x,y} \left[ \mathbb{E}_X \bigl( f_X^*(x) - \bar{f}(x) \bigr)^2 \right] + \mathbb{E}_{x,y} \bigl( \bar{f}(x) - y \bigr)^2 + 2 \mathbb{E}_{x,y} \left[ \bigl( \bar{f}(x) - y \bigr) \mathbb{E}_X \bigl( f_X^*(x) - \bar{f}(x) \bigr)\right].   \tag{8.14}$$
+\begin{aligned}
+\mathbb{E}_{X,x,y} \bigl( f_X^*(x) - y \bigr)^2 =& \mathbb{E}_{x,y} \left[ \mathbb{E}_X \bigl( f_X^*(x) - \bar{f}(x) \bigr)^2 \right] + \mathbb{E}_{x,y} \bigl( \bar{f}(x) - y \bigr)^2 \\
+& + 2 \mathbb{E}_{x,y} \left[ \bigl( \bar{f}(x) - y \bigr) \mathbb{E}_X \bigl( f_X^*(x) - \bar{f}(x) \bigr)\right].
+\end{aligned}   \tag{8.14}$$
 由于 $\mathbb{E}_X[ f_X^*(x) - \bar{f}(x) ] = 0$，交叉项为零。因此：
 $$
 \mathbb{E}_X\bigl[C_2[f_X^*]\bigr] = \mathbb{E}_{x,y} \bigl( \bar{f}(x) - y \bigr)^2 + \mathbb{E}_x \left[ \operatorname{Var}_X\bigl( f_X^*(x) \bigr) \right].   \tag{8.15}$$

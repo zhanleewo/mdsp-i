@@ -1,26 +1,62 @@
-"""从 mdsp-ii.pdf 提取目录并添加书签（精确跳转至标题位置）"""
+"""从 mdsp-i.pdf 提取目录并添加书签（精确跳转至标题位置）"""
 import fitz
 import sys
 import io
 import re
+from collections import defaultdict
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 pdf_path = r"mdsp-i.pdf"
-output_path = r"mdsp-i-bookmarked.pdf"
+output_path = r"现代数字信号处理 I 笔记.pdf"
 
 doc = fitz.open(pdf_path)
 
 SIZE_TO_LEVEL = {
-    27.5: 1,
-    17.2: 2,
-    12.9: 3,
-    10.1: 4,
+    33.2: 1,   # H1: 第x单元
+    20.7: 2,   # H2: 第x讲
+    15.5: 3,   # H3: x. xxx
+    12.1: 4,   # H4: x.x xxx
 }
+
+# ---- 诊断模式：扫描全部字体大小 ----
+SCAN_MODE = "--scan" in sys.argv
+if SCAN_MODE:
+    print(f"\n{'='*60}")
+    print("PDF 字体大小扫描（诊断模式）")
+    print(f"{'='*60}")
+    size_samples = defaultdict(set)
+    for page_num in range(min(doc.page_count, 30)):
+        page = doc[page_num]
+        blocks = page.get_text("dict")["blocks"]
+        for block in blocks:
+            if "lines" not in block:
+                continue
+            for line in block["lines"]:
+                for span in line["spans"]:
+                    size = round(span["size"], 1)
+                    text = span["text"].strip()
+                    if not text or len(text) < 2:
+                        continue
+                    if len(size_samples[size]) < 5:
+                        size_samples[size].add(text[:50])
+    print(f"\n{'字体大小':>8s} | {'示例文本'}")
+    print("-" * 60)
+    for sz in sorted(size_samples, reverse=True):
+        samples = " | ".join(sorted(size_samples[sz])[:4])
+        print(f"{sz:>8.1f}pt | {samples}")
+    print(f"{'='*60}\n")
+    print("请根据上述扫描结果更新 SIZE_TO_LEVEL 字典。")
+    print("H1 = 单元标题 (第x单元)")
+    print("H2 = 讲标题 (第x讲)")
+    print("H3 = 小节标题 (x. xxx)")
+    print("H4 = 子小节标题 (x.x xxx)\n")
+    doc.close()
+    sys.exit(0)
 
 all_headings = []
 
-# ---- 第一步：提取所有标题及其精确位置（来自 extract_toc.py）----
+# ---- 第一步：提取所有标题及其精确位置 ----
 for page_num in range(doc.page_count):
     page = doc[page_num]
     page_rect = page.rect
@@ -71,7 +107,7 @@ for page_num in range(doc.page_count):
         # L1/L2/L3: 保留所有标题
         if level in (1, 2, 3):
             all_headings.append((page, level, text, bbox))
-        # L4 (10.1pt): 只保留编号子小节（如 "1.1", "2.3"），过滤正文混入
+        # L4 (12.1pt): 只保留编号子小节（如 "1.1", "2.3"），过滤正文混入
         elif level == 4:
             if re.match(r'^\d+\.\d+', text):
                 all_headings.append((page, level, text, bbox))

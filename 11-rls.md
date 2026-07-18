@@ -314,7 +314,10 @@ A^{-1} (A + B C D) = A^{-1} A + A^{-1} B CD = I + A^{-1} B C D.   \tag{11.40}$$
 
 所以第二项为：
 $$
-X (D X + C^{-1})^{-1} D \cdot (I + X C D) = X (D X + C^{-1})^{-1} D + X (D X +C^{-1})^{-1} D X C D.   \tag{11.41}$$
+\begin{aligned}
+&X (D X + C^{-1})^{-1} D \cdot (I + X C D) \\
+=& X (D X + C^{-1})^{-1} D + X (D X +C^{-1})^{-1} D X C D.
+\end{aligned}   \tag{11.41}$$
 
 ---
 
@@ -324,7 +327,7 @@ X (D X + C^{-1})^{-1} D \cdot (I + X C D) = X (D X + C^{-1})^{-1} D + X (D X +C^
 $$
 \begin{aligned}
 & (I + X C D) - X (D X + C^{-1})^{-1} D - X (D X + C^{-1})^{-1} D X C D \\
-&= I + X C D - X (D X + C^{-1})^{-1} (D + D X C D).
+=& I + X C D - X (D X + C^{-1})^{-1} (D + D X C D).
 \end{aligned}   \tag{11.42}$$
 
 注意到：
@@ -363,7 +366,9 @@ I + B C X - B M^{-1} D A^{-1} - B C X M^{-1} D A^{-1}.   \tag{11.48}$$
 
 由于 \(M = X + C^{-1}\)，我们有：
 $$
-B C X - B C X M^{-1} D A^{-1} = B C X (I - M^{-1} D A^{-1}) = B C X (I -(X + C^{-1})^{-1} X).   \tag{11.49}$$
+\begin{aligned}
+& B C X - B C X M^{-1} D A^{-1} \\
+=& B C X (I - M^{-1} D A^{-1}) = B C X (I -(X + C^{-1})^{-1} X).\end{aligned}   \tag{11.49}$$
 
 利用矩阵恒等式：\(I - (X + C^{-1})^{-1} X = (X + C^{-1})^{-1} C^{-1}\)。
 
@@ -947,7 +952,10 @@ $$
 
 代入 Woodbury 恒等式：
 $$
-\phi^{-1}(n) = (\lambda \phi(n-1))^{-1} - (\lambda \phi(n-1))^{-1} X(n) \left( 1 + X^\top(n) (\lambda \phi(n-1))^{-1} X(n) \right)^{-1} X^\top(n) (\lambda \phi(n-1))^{-1}.   \tag{11.117}$$
+\begin{aligned}
+& \phi^{-1}(n) = (\lambda \phi(n-1))^{-1} \\ 
+&- (\lambda \phi(n-1))^{-1} X(n) \left( 1 + X^\top(n) (\lambda \phi(n-1))^{-1} X(n) \right)^{-1} X^\top(n) (\lambda \phi(n-1))^{-1}.
+\end{aligned}   \tag{11.117}$$
 
 简化：
 $$
