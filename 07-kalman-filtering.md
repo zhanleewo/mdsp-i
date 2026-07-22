@@ -246,7 +246,7 @@ K_n = \mathbb{E}[Z_n k_n^\top] \bigl( \mathbb{E}[k_n k_n^\top] \bigr)^{-1} = \Si
 \operatorname{Proj}_{k_n} Z_n = K_n \, k_n.
   \tag{7.38}$$
 
-代入 (2.3.3)，并利用 \( \operatorname{Proj}_{X(1:n-1)} Z_n = Z_{n|n-1} \)，得到后验状态更新方程： $$
+代入 (7.24)，并利用 \( \operatorname{Proj}_{X(1:n-1)} Z_n = Z_{n|n-1} \)，得到后验状态更新方程： $$
 \boxed{ Z_{n|n} = Z_{n|n-1} + K_n \bigl( X_n - \underbrace{H_n Z_{n|n-1}}_{\hat{X_n}} \bigr) }.
   \tag{7.39}$$
 
@@ -256,42 +256,151 @@ K_n = \mathbb{E}[Z_n k_n^\top] \bigl( \mathbb{E}[k_n k_n^\top] \bigr)^{-1} = \Si
 \Sigma_{n|n} = \mathbb{E}\bigl[ (Z_n - Z_{n|n})(Z_n - Z_{n|n})^\top \bigr].
   \tag{7.40}$$
 
-利用 (2.3.8) 和 \(Z_{n|n-1}\) 的表达式，可以导出： $$
-\Sigma_{n|n} = (I - K_n H_n) \Sigma_{n|n-1} (I - K_n H_n)^\top + K_n S_n K_n^\top.
-  \tag{7.41}$$
-通过矩阵恒等式可简化（通常教材使用更简洁的公式）： $$
-\boxed{ \Sigma_{n|n} = (I - K_n H_n) \Sigma_{n|n-1} } \quad \text{或} \quad \boxed{ \Sigma_{n|n} = \Sigma_{n|n-1} - K_n H_n \Sigma_{n|n-1} }.
-  \tag{7.42}$$
-（两种形式等价，在数值稳定时可采用后一种。）
-
-至此，我们完成了卡尔曼滤波递推方程组的完整推导。
+下面分两步完成：**第一步**从定义导出展开式 (7.44)；**第二步**利用卡尔曼增益的定义将 (7.44) 化简为 (7.47)。
 
 ---
 
-下面给出从 (2.3.9a) 到 (2.3.9b) 的详细矩阵恒等式推导。
+**第一步：导出展开式 (7.44)**
 
-**步骤 1**：展开 (2.3.9a) 的右端。 $$
+从后验状态更新方程（即 (7.39)）出发： $$
+Z_{n|n} = Z_{n|n-1} + K_n ( X_n - H_n Z_{n|n-1} ).
+  \tag{7.41}$$
+
+计算后验估计误差 \(Z_n - Z_{n|n}\)：
+$$
 \begin{aligned}
-\Sigma_{n|n} &= \Sigma_{n|n-1} - K_n H_n \Sigma_{n|n-1} - \Sigma_{n|n-1} H_n^\top K_n^\top \\
-&\quad + K_n H_n \Sigma_{n|n-1} H_n^\top K_n^\top + K_n S_n K_n^\top.
+Z_n - Z_{n|n}
+&= Z_n - Z_{n|n-1} - K_n ( X_n - H_n Z_{n|n-1} ) \\
+&= Z_n - Z_{n|n-1} - K_n X_n + K_n H_n Z_{n|n-1}.
+\end{aligned}
+$$
+
+代入观测方程 \(X_n = H_n Z_n + w_n\)：
+$$
+\begin{aligned}
+Z_n - Z_{n|n}
+&= Z_n - Z_{n|n-1} - K_n (H_n Z_n + w_n) + K_n H_n Z_{n|n-1} \\
+&= Z_n - Z_{n|n-1} - K_n H_n Z_n - K_n w_n + K_n H_n Z_{n|n-1}.
+\end{aligned}
+$$
+
+将含有 \(H_n\) 的项合并：
+$$
+\begin{aligned}
+Z_n - Z_{n|n}
+&= (Z_n - Z_{n|n-1}) - K_n H_n (Z_n - Z_{n|n-1}) - K_n w_n \\
+&= (I - K_n H_n)(Z_n - Z_{n|n-1}) - K_n w_n.
+\end{aligned}
+$$
+
+引入先验误差记号 \(\tilde{Z}_{n|n-1} \triangleq Z_n - Z_{n|n-1}\)，后验误差可写为： $$
+\tilde{Z}_{n|n} = (I - K_n H_n)\, \tilde{Z}_{n|n-1} - K_n w_n.
+  \tag{7.42}$$
+
+现在将上式代入协方差定义 (7.40)：
+$$
+\begin{aligned}
+\Sigma_{n|n}
+&= \mathbb{E}\Bigl[ \tilde{Z}_{n|n} \tilde{Z}_{n|n}^\top \Bigr] \\
+&= \mathbb{E}\Bigl[ \bigl( (I - K_n H_n)\tilde{Z}_{n|n-1} - K_n w_n \bigr)
+               \bigl( (I - K_n H_n)\tilde{Z}_{n|n-1} - K_n w_n \bigr)^\top \Bigr].
+\end{aligned}
+$$
+
+将外积展开为四项： $$
+\begin{aligned}
+\Sigma_{n|n} =\;
+&\;(I - K_n H_n)\, \mathbb{E}[\tilde{Z}_{n|n-1} \tilde{Z}_{n|n-1}^\top]\, (I - K_n H_n)^\top &[\mathbb{A}] \\[4pt]
+&-\; (I - K_n H_n)\, \mathbb{E}[\tilde{Z}_{n|n-1} w_n^\top]\, K_n^\top &[\mathbb{B}] \\[4pt]
+&-\; K_n\, \mathbb{E}[w_n \tilde{Z}_{n|n-1}^\top]\, (I - K_n H_n)^\top &[\mathbb{C}] \\[4pt]
+&+\; K_n\, \mathbb{E}[w_n w_n^\top]\, K_n^\top. &[\mathbb{D}]
 \end{aligned}
   \tag{7.43}$$
 
-**步骤 2**：利用卡尔曼增益的定义消去含有 \(S_n\) 的项。由增益定义： $$
-K_n \bigl( H_n \Sigma_{n|n-1} H_n^\top + S_n \bigr) = \Sigma_{n|n-1} H_n^\top.
+分析交叉项 \(\mathbb{B}\) 和 \(\mathbb{C}\)。注意到：
+$$
+\tilde{Z}_{n|n-1} = Z_n - Z_{n|n-1} = G_n Z_{n-1} + v_n - G_n Z_{n-1|n-1},
+$$
+而 \(Z_{n|n-1}\) 仅依赖于过去的观测 \(X(1:n-1)\)，进而仅依赖于 \(Z_{1:n-1}\) 和 \(w_{1:n-1}\)。观测噪声 \(w_n\) 与所有这些过去量相互独立，且 \(\mathbb{E}[w_n]=0\)。因此：
+$$
+\mathbb{E}[\tilde{Z}_{n|n-1} w_n^\top] = \mathbb{E}[\tilde{Z}_{n|n-1}]\, \mathbb{E}[w_n^\top] = 0,
+\qquad
+\mathbb{E}[w_n \tilde{Z}_{n|n-1}^\top] = \mathbb{E}[w_n]\, \mathbb{E}[\tilde{Z}_{n|n-1}^\top] = 0.
+$$
+
+于是项 \(\mathbb{B}\) 和 \(\mathbb{C}\) 均为零矩阵，只剩下 \(\mathbb{A}\) 和 \(\mathbb{D}\)。
+
+项 \(\mathbb{A}\) 中，\(\mathbb{E}[\tilde{Z}_{n|n-1} \tilde{Z}_{n|n-1}^\top] = \Sigma_{n|n-1}\) 即先验误差协方差；项 \(\mathbb{D}\) 中，\(\mathbb{E}[w_n w_n^\top] = S_n\) 即观测噪声协方差。代入即得展开式： $$
+\boxed{ \Sigma_{n|n} = (I - K_n H_n)\, \Sigma_{n|n-1}\, (I - K_n H_n)^\top + K_n S_n K_n^\top }.
   \tag{7.44}$$
-右乘 \(K_n^\top\) 得： $$
-K_n H_n \Sigma_{n|n-1} H_n^\top K_n^\top + K_n S_n K_n^\top = \Sigma_{n|n-1} H_n^\top K_n^\top.
+
+---
+
+**第二步：利用增益定义化简 (7.44) 至 (7.47)**
+
+现在从 (7.44) 出发，通过矩阵恒等式消去含 \(S_n\) 的项。
+
+**1. 展开转置，随后先后乘入括号。**
+
+$$
+\begin{aligned}
+\Sigma_{n|n}
+&= (I - K_n H_n)\, \Sigma_{n|n-1}\, (I - K_n H_n)^\top + K_n S_n K_n^\top \\
+&= (I - K_n H_n)\, \Sigma_{n|n-1}\, (I - H_n^\top K_n^\top) + K_n S_n K_n^\top \\[4pt]
+&= (I - K_n H_n)\bigl( \Sigma_{n|n-1} - \Sigma_{n|n-1} H_n^\top K_n^\top \bigr) + K_n S_n K_n^\top \\[4pt]
+&= \Sigma_{n|n-1}
+   - \Sigma_{n|n-1} H_n^\top K_n^\top
+   - K_n H_n \Sigma_{n|n-1}
+   + K_n H_n \Sigma_{n|n-1} H_n^\top K_n^\top
+   + K_n S_n K_n^\top.
+\end{aligned}
+$$
+
+**2. 将最后两项（含 \(S_n\) 的项）归为一组，记为 ③ 和 ④+⑤：**
+
+$$
+\Sigma_{n|n} = \Sigma_{n|n-1}
+   - \underbrace{\Sigma_{n|n-1} H_n^\top K_n^\top}_{\text{③}}
+   - K_n H_n \Sigma_{n|n-1}
+   + \underbrace{\bigl( K_n H_n \Sigma_{n|n-1} H_n^\top K_n^\top + K_n S_n K_n^\top \bigr)}_{\text{④+⑤}}.
   \tag{7.45}$$
 
-**步骤 3**：将 \((*)\) 代入展开式中。
-注意到展开式中第三项为 \(-\Sigma_{n|n-1} H_n^\top K_n^\top\)，而 \((*)\) 给出的恰好是最后两项之和等于 \(\Sigma_{n|n-1} H_n^\top K_n^\top\)。因此： $$
--\Sigma_{n|n-1} H_n^\top K_n^\top + \bigl( K_n H_n \Sigma_{n|n-1} H_n^\top K_n^\top + K_n S_n K_n^\top \bigr) = 0.
+**3. 利用卡尔曼增益定义消去 ④+⑤。** 卡尔曼增益为： $$
+K_n = \Sigma_{n|n-1} H_n^\top \bigl( H_n \Sigma_{n|n-1} H_n^\top + S_n \bigr)^{-1}.
   \tag{7.46}$$
 
-**步骤 4**：于是展开式中的后三项相互抵消，只剩下： $$
-\Sigma_{n|n} = \Sigma_{n|n-1} - K_n H_n \Sigma_{n|n-1} = (I - K_n H_n) \Sigma_{n|n-1}.
+两端右乘 \((H_n \Sigma_{n|n-1} H_n^\top + S_n)\)，再右乘 \(K_n^\top\)：
+$$
+\begin{aligned}
+K_n \bigl( H_n \Sigma_{n|n-1} H_n^\top + S_n \bigr) &= \Sigma_{n|n-1} H_n^\top, \\[4pt]
+K_n H_n \Sigma_{n|n-1} H_n^\top K_n^\top + K_n S_n K_n^\top &= \Sigma_{n|n-1} H_n^\top K_n^\top.
+\end{aligned}
+$$
+
+比较上式与 (7.45)：等式左端恰好是 ④+⑤，右端恰好是 ③。因此：
+
+$$
+\underbrace{\Sigma_{n|n-1} H_n^\top K_n^\top}_{\text{③}}
+= \underbrace{K_n H_n \Sigma_{n|n-1} H_n^\top K_n^\top + K_n S_n K_n^\top}_{\text{④+⑤}}.
+$$
+
+**4. ③ 与 ④+⑤ 精确抵消，提取公因子即得 Josef 形式。**
+
+$$
+\begin{aligned}
+\Sigma_{n|n}
+&= \Sigma_{n|n-1}
+   - \underbrace{\Sigma_{n|n-1} H_n^\top K_n^\top}_{\text{③}}
+   - K_n H_n \Sigma_{n|n-1}
+   + \underbrace{\bigl( K_n H_n \Sigma_{n|n-1} H_n^\top K_n^\top + K_n S_n K_n^\top \bigr)}_{\text{④+⑤}} \\[4pt]
+&= \Sigma_{n|n-1} - K_n H_n \Sigma_{n|n-1} \\[4pt]
+&= \boxed{ (I - K_n H_n) \Sigma_{n|n-1} }.
+\end{aligned}
   \tag{7.47}$$
+
+两种等价写法： \(\Sigma_{n|n} = \Sigma_{n|n-1} - K_n H_n \Sigma_{n|n-1}\)。后一种在数值稳定时更常用（Josef 形式）。
+
+至此，我们完成了卡尔曼滤波递推方程组的完整推导。
 
 #### 2.3.6 卡尔曼滤波的算法梳理
 
@@ -342,7 +451,7 @@ K_n = \mathbb{E}[Z_n k_n^\top] \bigl( \mathbb{E}[k_n k_n^\top] \bigr)^{-1} = \Si
 - 观测噪声方差 \(S_n = \mathbb{E}[w_n^2]\)
 - 先验估计误差方差 \(\Sigma_{n|n-1} = \mathbb{E}[(Z_n - Z_{n|n-1})^2]\)
 
-则卡尔曼增益公式 (2.3.7) 化为： $$
+则卡尔曼增益公式 (7.37) 化为： $$
 K_n = \frac{\Sigma_{n|n-1} H_n}{H_n^2 \Sigma_{n|n-1} + S_n}.
   \tag{7.52}$$
 
