@@ -55,7 +55,7 @@ for page_num in range(doc.page_count):
     for page, level, size, text, bbox in merged:
         if len(text) < 2:
             continue
-        if re.match(r'^[\s\.\-·•/\\()（）]+$', text):
+        if re.match(r'^[\s\.\-·•/\$)（）]+$', text):
             continue
         if level in (1, 2, 3):
             all_headings.append((page, level, text, bbox))

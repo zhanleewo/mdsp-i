@@ -102,7 +102,7 @@ for page_num in range(doc.page_count):
         if len(text) < 2:
             continue
         # 纯标点/分隔符
-        if re.match(r'^[\s\.\-·•/\\()（）]+$', text):
+        if re.match(r'^[\s\.\-·•/\$)（）]+$', text):
             continue
         # L1/L2/L3: 保留所有标题
         if level in (1, 2, 3):

@@ -18,7 +18,7 @@
 $$
 \hat{S}_X(\omega) = \frac{1}{N} \left| \sum_{k=1}^{N} X(k) e^{-j\omega k} \right|^2.   \tag{16.1}$$
 
-我们知道，矩形窗在频域对应的核是 Fejér 核，其主瓣宽度约为 \( 4\pi/N \)，旁瓣衰减缓慢（第一旁瓣仅约 -13 dB）。这意味着：
+我们知道，矩形窗在频域对应的核是 Fejér 核，其主瓣宽度约为 $ 4\pi/N $，旁瓣衰减缓慢（第一旁瓣仅约 -13 dB）。这意味着：
 - **频率分辨率**受限于主瓣宽度：两个频率分量若间隔小于主瓣宽度，则无法分辨。
 - **频谱泄漏**严重：旁瓣会将远处强信号的能量“泄漏”到当前频率点，掩盖弱信号。
 
@@ -28,35 +28,35 @@ $$
 
 上述困境的根源在于：周期图法及其所有改进，都遵循同一个逻辑框架——**选择一个窗函数，然后计算截断数据的傅里叶变换**。无论窗函数如何设计，这个框架本身决定了我们只能在一个窗下工作，并且主瓣与旁瓣的权衡无法避免。
 
-一个自然的问题随之产生：**是否存在一种“最优”的窗函数，能够在给定数据长度 \( N \) 和感兴趣的频带宽度 \( W \) 的条件下，使主瓣能量尽可能集中，同时旁瓣尽可能低？**
+一个自然的问题随之产生：**是否存在一种“最优”的窗函数，能够在给定数据长度 $ N $ 和感兴趣的频带宽度 $ W $ 的条件下，使主瓣能量尽可能集中，同时旁瓣尽可能低？**
 
 这个问题的答案并非唯一，但存在一组在数学上被证明为最优的函数——**长球波函数（Prolate Spheroidal Wave Functions, PSWF）**。它们由 Slepian、Landau 和 Pollak 于 1961 年提出，是**在给定时域和频域双重截断约束下，能量集中度达到最大的本征函数**。
 
 ### 1.3 长球波函数的核心思想：时频能量集中
 
-考虑一个长度为 \( N \) 的离散信号 \( x[n] \)，我们想将其限制在一个频带 \( |\omega| \leq W \) 内，同时使时域能量尽可能集中在 \( [0, N-1] \) 区间。直观上，理想的带限信号应在时域无限延伸，但实际中我们只能观察到有限长度。长球波函数解决了这个矛盾：**它们是离散时间、有限长度、且尽可能带限的那些序列**。
+考虑一个长度为 $ N $ 的离散信号 $ x[n] $，我们想将其限制在一个频带 $ |\omega| \leq W $ 内，同时使时域能量尽可能集中在 $ [0, N-1] $ 区间。直观上，理想的带限信号应在时域无限延伸，但实际中我们只能观察到有限长度。长球波函数解决了这个矛盾：**它们是离散时间、有限长度、且尽可能带限的那些序列**。
 
-更精确地说，给定一个带宽 \( W \)（归一化角频率），我们定义一组序列 \( v_k[n] \)，使得它们：
-1. 仅在 \( n = 0, 1, \dots, N-1 \) 上非零（时域有限）；
-2. 其离散时间傅里叶变换（DTFT）的能量在 \( |\omega| \leq W \) 频带内的占比最大。
+更精确地说，给定一个带宽 $ W $（归一化角频率），我们定义一组序列 $ v_k[n] $，使得它们：
+1. 仅在 $ n = 0, 1, \dots, N-1 $ 上非零（时域有限）；
+2. 其离散时间傅里叶变换（DTFT）的能量在 $ |\omega| \leq W $ 频带内的占比最大。
 
 这个优化问题可以表述为：最大化
 $$
 \lambda = \frac{\int_{-W}^{W} |V(\omega)|^2 d\omega}{\int_{-\pi}^{\pi} |V(\omega)|^2 d\omega},   \tag{16.2}$$
-其中 \( V(\omega) = \sum_{n=0}^{N-1} v[n] e^{-j\omega n} \)。
+其中 $ V(\omega) = \sum_{n=0}^{N-1} v[n] e^{-j\omega n} $。
 
-**长球波函数正是这个变分问题的解**。它们对应的特征值 \( \lambda_0 \ge \lambda_1 \ge \dots \ge \lambda_{N-1} \ge 0 \) 给出了每个基函数在频带内的能量占比。前几个 \( \lambda_k \) 非常接近 1，意味着这些基函数的能量几乎全部集中在指定的频带内——这就是“最优能量集中”的含义。
+**长球波函数正是这个变分问题的解**。它们对应的特征值 $ \lambda_0 \ge \lambda_1 \ge \dots \ge \lambda_{N-1} \ge 0 $ 给出了每个基函数在频带内的能量占比。前几个 $ \lambda_k $ 非常接近 1，意味着这些基函数的能量几乎全部集中在指定的频带内——这就是“最优能量集中”的含义。
 
 ### 1.4 与周期图法的直观对比：从“单个窗”到“多窗”
 
 周期图法使用单个窗（如矩形窗或平滑窗）截断数据，得到一个谱估计。而长球波函数方法（即 Thomson 多窗谱估计）使用**一组相互正交的 PSWF 窗函数**，每个窗都能在给定带宽内实现最优能量集中。具体做法是：
-- 对每一个 PSWF 窗 \( v_k[n] \)，计算其傅里叶变换并取模平方，得到第 \( k \) 个“子谱”估计；
+- 对每一个 PSWF 窗 $ v_k[n] $，计算其傅里叶变换并取模平方，得到第 $ k $ 个“子谱”估计；
 - 将这些子谱估计进行加权平均，得到最终的谱估计。
 
 **核心优势在于**：
 1. **每个窗都是最优的**（能量泄漏最小），因此单个子谱的分辨率已经优于传统窗。
 2. **多个窗相互正交**，它们提供了数据中不同的“信息视角”，平均之后方差显著降低，且**不牺牲分辨率**——因为每个窗本身已经拥有最优的主瓣宽度。
-3. **带宽 \( W \) 成为可调参数**，用户可以根据信号特性选择带宽，在分辨率和稳定性之间灵活权衡（但与传统方法不同，这种权衡是在最优基函数下进行的）。
+3. **带宽 $ W $ 成为可调参数**，用户可以根据信号特性选择带宽，在分辨率和稳定性之间灵活权衡（但与传统方法不同，这种权衡是在最优基函数下进行的）。
 
 ### 1.5 周期图法与 PSWF 方法的对比总结
 
@@ -64,7 +64,7 @@ $$
 |------|---------------------|------------------------|
 | 窗的来源 | 启发式设计（矩形、三角、Hamming 等） | 变分问题的精确解（最优能量集中） |
 | 窗的数量 | 单个窗 | 多个正交窗 |
-| 分辨率 | 受主瓣宽度限制，与窗函数相关 | 由带宽参数 \( W \) 控制，每个窗均为最优 |
+| 分辨率 | 受主瓣宽度限制，与窗函数相关 | 由带宽参数 $ W $ 控制，每个窗均为最优 |
 | 方差控制 | 靠分段平均（牺牲分辨率） | 靠多个正交窗的平均（不牺牲分辨率） |
 | 适用场景 | 平稳信号，对分辨率要求不高 | 对分辨率和稳定性均有较高要求的场景 |
 
@@ -455,24 +455,24 @@ graph LR
     H --> Y["Y(t)"]
 ```
 
-对于一个线性时不变（LTI）系统，其输入 \( X(t) \) 与输出 \( Y(t) \) 的关系由卷积给出：
+对于一个线性时不变（LTI）系统，其输入 $ X(t) $ 与输出 $ Y(t) $ 的关系由卷积给出：
 $$
 Y(t) = \int_{-\infty}^{\infty} h(t - \tau) X(\tau) d\tau.   \tag{16.61}$$
 
-我们已知宽平稳随机过程 \( X(t) \) 的谱表示为：
+我们已知宽平稳随机过程 $ X(t) $ 的谱表示为：
 $$
 X(t) = \int_{-\infty}^{\infty} \exp(j\omega t) dF_X(\omega),   \tag{16.62}$$
-其中 \( F_X(\omega) \) 是谱过程，\( dF_X(\omega) \) 是频率区间上的随机增量，满足正交增量性质：
+其中 $ F_X(\omega) $ 是谱过程，$ dF_X(\omega) $ 是频率区间上的随机增量，满足正交增量性质：
 $$
 \mathbb{E}\left( dF_X(\omega) \, \overline{dF_X(\omega')} \right) = 0, \quad \omega \neq \omega'.   \tag{16.63}$$
 
-现在我们要推导输出过程 \( Y(t) \) 的谱表示，即找到 \( dF_Y(\omega) \) 与 \( dF_X(\omega) \) 的关系。
+现在我们要推导输出过程 $ Y(t) $ 的谱表示，即找到 $ dF_Y(\omega) $ 与 $ dF_X(\omega) $ 的关系。
 
 ---
 
 #### 2.10.1 推导步骤
 
-将 \( X(\tau) \) 的谱表示 (16.56) 代入卷积公式 (16.55)：
+将 $ X(\tau) $ 的谱表示 (16.56) 代入卷积公式 (16.55)：
 $$
 Y(t) = \int_{-\infty}^{\infty} h(t - \tau) \left( \int_{-\infty}^{\infty} \exp(j\omega \tau) dF_X(\omega) \right) d\tau.  \tag{16.64}$$
 
@@ -480,7 +480,7 @@ Y(t) = \int_{-\infty}^{\infty} h(t - \tau) \left( \int_{-\infty}^{\infty} \exp(j
 $$
 Y(t) = \int_{-\infty}^{\infty} \left( \int_{-\infty}^{\infty} h(t - \tau) \exp(j\omega \tau) d\tau \right) dF_X(\omega).   \tag{16.65}$$
 
-现在处理内层积分。令 \( u = t - \tau \)，则 \( \tau = t - u \)，\( d\tau = -du \)。积分限从 \( \tau = -\infty \) 到 \( \infty \) 变为 \( u = \infty \) 到 \( -\infty \)，因此：
+现在处理内层积分。令 $ u = t - \tau $，则 $ \tau = t - u $，$ d\tau = -du $。积分限从 $ \tau = -\infty $ 到 $ \infty $ 变为 $ u = \infty $ 到 $ -\infty $，因此：
 $$
 \int_{-\infty}^{\infty} h(t - \tau) \exp(j\omega \tau) d\tau = \int_{-\infty}^{\infty} h(u) \exp(j\omega (t - u)) du.   \tag{16.66}$$
 
@@ -492,7 +492,7 @@ $$
 $$
 \int_{-\infty}^{\infty} h(u) \exp(j\omega t) \exp(-j\omega u) du = \exp(j\omega t) \int_{-\infty}^{\infty} h(u) \exp(-j\omega u) du.   \tag{16.68}$$
 
-定义系统的频率响应 \( H(\omega) \) 为冲激响应 \( h(t) \) 的傅里叶变换：
+定义系统的频率响应 $ H(\omega) $ 为冲激响应 $ h(t) $ 的傅里叶变换：
 $$
 H(\omega) = \int_{-\infty}^{\infty} h(t) \exp(-j\omega t) dt.   \tag{16.69}$$
 
@@ -504,7 +504,7 @@ $$
 $$
 Y(t) = \int_{-\infty}^{\infty} H(\omega) \exp(j\omega t) dF_X(\omega).   \tag{16.71}$$
 
-由于 \( H(\omega) \) 是确定性函数（不是随机变量），可以将其移入积分号内（与 \( dF_X(\omega) \) 相乘）：
+由于 $ H(\omega) $ 是确定性函数（不是随机变量），可以将其移入积分号内（与 $ dF_X(\omega) $ 相乘）：
 $$
 Y(t) = \int_{-\infty}^{\infty} \exp(j\omega t) \left( H(\omega) dF_X(\omega) \right).   \tag{16.72}$$
 
@@ -512,10 +512,10 @@ Y(t) = \int_{-\infty}^{\infty} \exp(j\omega t) \left( H(\omega) dF_X(\omega) \ri
 
 #### 2.10.2 输出过程的谱表示
 
-根据谱表示的一般形式，输出过程 \( Y(t) \) 也有其自身的谱表示：
+根据谱表示的一般形式，输出过程 $ Y(t) $ 也有其自身的谱表示：
 $$
 Y(t) = \int_{-\infty}^{\infty} \exp(j\omega t) dF_Y(\omega),   \tag{16.73}$$
-其中 \( dF_Y(\omega) \) 是输出过程的谱增量。
+其中 $ dF_Y(\omega) $ 是输出过程的谱增量。
 
 将 (16.65) 与 (16.66) 对比，由于傅里叶变换的唯一性（在分布意义下），我们得到：
 $$
@@ -527,12 +527,12 @@ dF_Y(\omega) = H(\omega) dF_X(\omega).   \tag{16.74}$$
 
 #### 2.10.3 物理意义与推论
 
-1. **确定性信号类比**：对于确定性信号，LTI 系统在频域的作用是 \( Y(\omega) = H(\omega) X(\omega) \)。(16.68) 是这一关系在随机信号谱表示下的直接推广，只不过这里的“频谱”换成了随机测度 \( dF(\omega) \)。
+1. **确定性信号类比**：对于确定性信号，LTI 系统在频域的作用是 $ Y(\omega) = H(\omega) X(\omega) $。(16.68) 是这一关系在随机信号谱表示下的直接推广，只不过这里的“频谱”换成了随机测度 $ dF(\omega) $。
 
 2. **功率谱密度的关系**：由 (16.68) 和正交增量性质，可以立即导出功率谱密度的传递关系：
    $$
    \mathbb{E}\left( |dF_Y(\omega)|^2 \right) = |H(\omega)|^2 \mathbb{E}\left( |dF_X(\omega)|^2 \right).   \tag{16.75}$$
-   再结合 (16.53)，即 \( \mathbb{E}(|dF_X(\omega)|^2) = \frac{1}{2\pi} S_X(\omega) d\omega \)，可得：
+   再结合 (16.53)，即 $ \mathbb{E}(|dF_X(\omega)|^2) = \frac{1}{2\pi} S_X(\omega) d\omega $，可得：
    $$
    \frac{1}{2\pi} S_Y(\omega) d\omega = |H(\omega)|^2 \frac{1}{2\pi} S_X(\omega) d\omega.   \tag{16.76}$$
    因此：
@@ -545,13 +545,13 @@ dF_Y(\omega) = H(\omega) dF_X(\omega).   \tag{16.74}$$
 $$
 \boxed{ dF_Y(\omega) = H(\omega) dF_X(\omega) }.   \tag{16.78}$$
 
-这一关系是确定性信号频域分析结论 \( Y(\omega) = H(\omega) X(\omega) \) 在随机信号框架下的自然延伸，它保留了线性系统频域分析的简洁性，同时通过随机测度 \( dF(\omega) \) 和正交增量过程的概念，严格处理了平稳随机过程的频域性质。这也为后续多窗谱估计中如何利用多个正交窗来估计功率谱提供了理论基础。
+这一关系是确定性信号频域分析结论 $ Y(\omega) = H(\omega) X(\omega) $ 在随机信号框架下的自然延伸，它保留了线性系统频域分析的简洁性，同时通过随机测度 $ dF(\omega) $ 和正交增量过程的概念，严格处理了平稳随机过程的频域性质。这也为后续多窗谱估计中如何利用多个正交窗来估计功率谱提供了理论基础。
 
 ## 3. 谱表示的工程落地
 
 ### 3.1 数据有限
 
-在前面的推导中，我们假设采样数据是无限长的，即 \(\{X(k)\}_{k=-\infty}^{\infty}\)。但在实际工程中，我们只能获得有限长度的观测数据：
+在前面的推导中，我们假设采样数据是无限长的，即 $\{X(k)\}_{k=-\infty}^{\infty}$。但在实际工程中，我们只能获得有限长度的观测数据：
 $$
 X(1), X(2), \dots, X(N).   \tag{16.79}$$
 
@@ -559,7 +559,7 @@ X(1), X(2), \dots, X(N).   \tag{16.79}$$
 $$
 \hat{X}(\omega) = \sum_{k=1}^{N} X(k) \exp(-j\omega k).   \tag{16.80}$$
 
-注意这里我们使用的是 \(\exp(-j\omega k)\)，与之前的符号保持一致。现在我们将 \(X(k)\) 用谱表示（2.23）代入：
+注意这里我们使用的是 $\exp(-j\omega k)$，与之前的符号保持一致。现在我们将 $X(k)$ 用谱表示（2.23）代入：
 $$
 X(k) = \int_{-\infty}^{\infty} \exp(j\omega' k) dF_X(\omega').   \tag{16.81}$$
 
@@ -575,7 +575,7 @@ $$
 $$
 D_N(\omega - \omega') = \sum_{k=1}^{N} \exp\left( -j(\omega - \omega') k \right) = \sum_{k=1}^{N} \exp\left( j(\omega' - \omega) k \right).   \tag{16.84}$$
 
-注意这里的符号：\(D_N(\omega - \omega') = \sum_{k=1}^{N} \exp(-j(\omega - \omega') k)\)。于是 (16.77) 可以写为：
+注意这里的符号：$D_N(\omega - \omega') = \sum_{k=1}^{N} \exp(-j(\omega - \omega') k)$。于是 (16.77) 可以写为：
 $$
 \hat{X}(\omega) = \int_{-\infty}^{\infty} D_N(\omega - \omega') dF_X(\omega').   \tag{16.85}$$
 
@@ -588,15 +588,15 @@ $$
 \boxed{ \hat{X}(\omega) = \int_{-\infty}^{\infty} D_N(\omega - \omega') dF_X(\omega') }.   \tag{16.86}$$
 
 其中：
-- \(\hat{X}(\omega)\) 是**我们能够计算出来的量**——有限数据的傅里叶变换；
-- \(dF_X(\omega')\) 是**真实的谱信息**——只有上帝才知道；
-- \(D_N(\omega - \omega')\) 是**Dirichlet 核**（或 Fejér 核的前身），它是由有限数据截断引入的。
+- $\hat{X}(\omega)$ 是**我们能够计算出来的量**——有限数据的傅里叶变换；
+- $dF_X(\omega')$ 是**真实的谱信息**——只有上帝才知道；
+- $D_N(\omega - \omega')$ 是**Dirichlet 核**（或 Fejér 核的前身），它是由有限数据截断引入的。
 
 ---
 
 #### 3.1.2 Dirichlet 核的显式形式
 
-\(D_N(\theta)\) 是一个 Dirichlet 核，其闭式表达式为：
+$D_N(\theta)$ 是一个 Dirichlet 核，其闭式表达式为：
 $$
 D_N(\theta) = \sum_{k=1}^{N} \exp(-j\theta k) = \exp\left( -j\theta \frac{N+1}{2} \right) \frac{\sin(N\theta/2)}{\sin(\theta/2)}.   \tag{16.87}$$
 
@@ -610,66 +610,66 @@ $$
 
 方程 (16.80) 告诉我们一个关键的事实：
 
-**我们通过有限数据计算得到的 \(\hat{X}(\omega)\)，并不是真实谱 \(dF_X(\omega)\) 本身，而是真实谱与 Dirichlet 核 \(D_N\) 的卷积（在频率域上）。**
+**我们通过有限数据计算得到的 $\hat{X}(\omega)$，并不是真实谱 $dF_X(\omega)$ 本身，而是真实谱与 Dirichlet 核 $D_N$ 的卷积（在频率域上）。**
 
 换句话说：
-- **真实谱信息** \(dF_X(\omega')\) 被 Dirichlet 核 \(D_N(\omega - \omega')\) 所“涂抹”或“模糊”了；
-- 我们观察到的 \(\hat{X}(\omega)\) 是真实谱经过 Dirichlet 核加权平均后的结果；
-- \(D_N\) 的主瓣宽度决定了频率分辨率，旁瓣则造成了频谱泄漏。
+- **真实谱信息** $dF_X(\omega')$ 被 Dirichlet 核 $D_N(\omega - \omega')$ 所“涂抹”或“模糊”了；
+- 我们观察到的 $\hat{X}(\omega)$ 是真实谱经过 Dirichlet 核加权平均后的结果；
+- $D_N$ 的主瓣宽度决定了频率分辨率，旁瓣则造成了频谱泄漏。
 
-具体来说，\(D_N(\theta)\) 具有以下性质：
-1. **主瓣**：在 \(\theta = 0\) 处取最大值 \(N\)，主瓣宽度约为 \(2\pi/N\)；
-2. **零点**：在 \(\theta = \frac{2\pi}{N}, \frac{4\pi}{N}, \dots\) 处为零；
-3. **旁瓣**：旁瓣衰减缓慢（仅约 \(O(1/\theta)\)），导致严重的频谱泄漏。
+具体来说，$D_N(\theta)$ 具有以下性质：
+1. **主瓣**：在 $\theta = 0$ 处取最大值 $N$，主瓣宽度约为 $2\pi/N$；
+2. **零点**：在 $\theta = \frac{2\pi}{N}, \frac{4\pi}{N}, \dots$ 处为零；
+3. **旁瓣**：旁瓣衰减缓慢（仅约 $O(1/\theta)$），导致严重的频谱泄漏。
 
 因此，我们所做的所有谱估计工作，本质上都是在解这个基本方程：
-> **从 \(\hat{X}(\omega)\) 出发，通过某种手段，尽可能准确地反推出真实的 \(dF_X(\omega')\)。**
+> **从 $\hat{X}(\omega)$ 出发，通过某种手段，尽可能准确地反推出真实的 $dF_X(\omega')$。**
 
-周期图法直接取 \(|\hat{X}(\omega)|^2\) 作为功率谱估计，等价于认为 \(D_N\) 近似为 \(\delta\) 函数——这在 \(N\) 足够大时近似成立，但有限 \(N\) 下偏差和泄漏不可避免。
+周期图法直接取 $|\hat{X}(\omega)|^2$ 作为功率谱估计，等价于认为 $D_N$ 近似为 $\delta$ 函数——这在 $N$ 足够大时近似成立，但有限 $N$ 下偏差和泄漏不可避免。
 
-加窗法、多窗法（PSWF）等方法，本质上都是在 \(D_N\) 的基础上进行改造——通过加权、截断或最优基函数，使得方程 (16.80) 中的核函数更接近理想 \(\delta\) 函数，从而更准确地恢复真实谱信息。
+加窗法、多窗法（PSWF）等方法，本质上都是在 $D_N$ 的基础上进行改造——通过加权、截断或最优基函数，使得方程 (16.80) 中的核函数更接近理想 $\delta$ 函数，从而更准确地恢复真实谱信息。
 
-这正是为什么长球波函数（PSWF）能够提供更好的谱估计——因为它给出了在给定带宽 \(W\) 下最优的基函数，使得 (16.80) 中的核函数在频带内能量最集中，从而最大程度地抑制泄漏并保持分辨率。
+这正是为什么长球波函数（PSWF）能够提供更好的谱估计——因为它给出了在给定带宽 $W$ 下最优的基函数，使得 (16.80) 中的核函数在频带内能量最集中，从而最大程度地抑制泄漏并保持分辨率。
 ### 3.2 线性空间解这个基本方程
 
 我们将基本方程 (16.80) 简写为算子形式：
 $$
 \hat{X} = D F,   \tag{16.89}$$
-其中 \( D \) 是一个积分算子，其核为 \( D(\omega - \omega') \)。
+其中 $ D $ 是一个积分算子，其核为 $ D(\omega - \omega') $。
 
 在理想的线性空间框架下，如果我们能够求逆，那么就可以直接得到真实的谱信息：
 $$
 F = D^{-1} \hat{X}.   \tag{16.90}$$
 
-然而，\( D \) 是奇异的（不可逆），因为 Dirichlet 核 \( D(\omega - \omega') \) 作为积分核，其对应的积分算子不是满射——它会把高频成分“抹掉”，导致信息丢失。因此，直接求逆是不可行的。
+然而，$ D $ 是奇异的（不可逆），因为 Dirichlet 核 $ D(\omega - \omega') $ 作为积分核，其对应的积分算子不是满射——它会把高频成分“抹掉”，导致信息丢失。因此，直接求逆是不可行的。
 
 为了在这个框架下求解，我们需要采用**特征分解**的方法。具体步骤如下：
 
 **步骤 1：求特征矢量**
 
-设 \( \{u_k\} \) 是积分算子 \( D \) 的特征函数（特征矢量），满足：
+设 $ \{u_k\} $ 是积分算子 $ D $ 的特征函数（特征矢量），满足：
 $$
 D u_k = \lambda_k u_k, \quad k = 1, 2, \dots   \tag{16.91}$$
-其中 \( \lambda_k \) 是对应的特征值。
+其中 $ \lambda_k $ 是对应的特征值。
 
-**步骤 2：展开真实谱 \( F \)**
+**步骤 2：展开真实谱 $ F $**
 
-将真实的谱信息 \( F \) 在特征函数 \( \{u_k\} \) 上展开：
+将真实的谱信息 $ F $ 在特征函数 $ \{u_k\} $ 上展开：
 $$
 F = \sum_i \alpha_i u_i,   \tag{16.92}$$
-其中 \( \alpha_i \) 是展开系数。
+其中 $ \alpha_i $ 是展开系数。
 
 将 (16.89) 代入 (16.83)，利用 (16.87)：
 $$
 \hat{X} = D F = D \left( \sum_i \alpha_i u_i \right) = \sum_i \alpha_i D u_i = \sum_i \alpha_i \lambda_i u_i.   \tag{16.93}$$
 
-**步骤 3：确定展开系数 \( \alpha_i \)**
+**步骤 3：确定展开系数 $ \alpha_i $**
 
-对 (16.90) 两边左乘 \( u_k^\top \)（在离散情况下取内积）：
+对 (16.90) 两边左乘 $ u_k^\top $（在离散情况下取内积）：
 $$
 u_k^\top \hat{X} = \sum_i \alpha_i \lambda_i (u_k^\top u_i).   \tag{16.94}$$
 
-由于 \( \{u_i\} \) 是正交的（特征函数满足正交性），\( u_k^\top u_i = \delta_{ki} \)，所以：
+由于 $ \{u_i\} $ 是正交的（特征函数满足正交性），$ u_k^\top u_i = \delta_{ki} $，所以：
 $$
 u_k^\top \hat{X} = \alpha_k \lambda_k.   \tag{16.95}$$
 
@@ -677,13 +677,13 @@ u_k^\top \hat{X} = \alpha_k \lambda_k.   \tag{16.95}$$
 $$
 \alpha_k = \frac{u_k^\top \hat{X}}{\lambda_k}.   \tag{16.96}$$
 
-**步骤 4：重构真实谱 \( F \)**
+**步骤 4：重构真实谱 $ F $**
 
 将 (16.92) 代回 (16.89)：
 $$
 F = \sum_i \frac{u_i^\top \hat{X}}{\lambda_i} u_i.   \tag{16.97}$$
 
-这就是线性空间下求解基本方程的形式解。它表明：如果我们能找到 Dirichlet 核 \( D \) 的特征函数 \( \{u_k\} \) 和非零特征值 \( \{\lambda_k\} \)，那么真实谱 \( F \) 就可以通过 (16.93) 重构。
+这就是线性空间下求解基本方程的形式解。它表明：如果我们能找到 Dirichlet 核 $ D $ 的特征函数 $ \{u_k\} $ 和非零特征值 $ \{\lambda_k\} $，那么真实谱 $ F $ 就可以通过 (16.93) 重构。
 
 然而，这一结果在离散情况下（有限维）是可行的，但在函数空间中（连续频率）则面临挑战。下一节我们将讨论函数空间中的推广。
 
@@ -691,42 +691,42 @@ F = \sum_i \frac{u_i^\top \hat{X}}{\lambda_i} u_i.   \tag{16.97}$$
 
 ### 3.3 函数空间上解这个基本方程
 
-在函数空间中，\( D \) 是一个积分算子，不能简单地“求逆”。因此我们需要使用**特征函数**这一工具来处理。
+在函数空间中，$ D $ 是一个积分算子，不能简单地“求逆”。因此我们需要使用**特征函数**这一工具来处理。
 
 #### 3.3.1 特征函数
 
-在函数空间中，算子 \( D \) 作用于函数 \( u(\omega) \) 的方式是：
+在函数空间中，算子 $ D $ 作用于函数 $ u(\omega) $ 的方式是：
 $$
 (D u)(\omega) = \int_{-\infty}^{\infty} D(\omega - \omega') u(\omega') d\omega'.   \tag{16.98}$$
 
-我们寻找特征函数 \( u_k(\omega) \)，使得：
+我们寻找特征函数 $ u_k(\omega) $，使得：
 $$
 (D u_k)(\omega) = \lambda_k u_k(\omega),   \tag{16.99}$$
 即：
 $$
 \int_{-\infty}^{\infty} D(\omega - \omega') u_k(\omega') d\omega' = \lambda_k u_k(\omega).   \tag{16.100}$$
 
-#### 3.3.2 求特征函数 \( \{u_k\} \)
+#### 3.3.2 求特征函数 $ \{u_k\} $
 
-将 Dirichlet 核 \( D(\omega) = \sum_{k=1}^{N} \exp(-j\omega k) \) 代入 (16.96)：
+将 Dirichlet 核 $ D(\omega) = \sum_{k=1}^{N} \exp(-j\omega k) $ 代入 (16.96)：
 $$
 \int_{-\pi}^{\pi} D(\omega - \omega') u_k(\omega') d\omega' = \lambda_k u_k(\omega).   \tag{16.101}$$
 
-这里的积分区间取 \( [-\pi, \pi] \) 是因为离散时间信号的频率是周期性的，且 \( \hat{X}(\omega) \) 只在这个区间上有定义。
+这里的积分区间取 $ [-\pi, \pi] $ 是因为离散时间信号的频率是周期性的，且 $ \hat{X}(\omega) $ 只在这个区间上有定义。
 
-**关键认识**：这个特征方程的解 \( u_k(\omega) \) 正是 **长球波函数（PSWF）**。Dirichlet 核 \( D(\omega - \omega') \) 作为积分核，其特征函数在给定带宽内具有最优的能量集中性质——这正是 PSWF 在谱估计中成为最优基函数的根本原因。
+**关键认识**：这个特征方程的解 $ u_k(\omega) $ 正是 **长球波函数（PSWF）**。Dirichlet 核 $ D(\omega - \omega') $ 作为积分核，其特征函数在给定带宽内具有最优的能量集中性质——这正是 PSWF 在谱估计中成为最优基函数的根本原因。
 
 **为什么 PSWF 是最优的？**
 
-Dirichlet 核 \( D(\omega) \) 是矩形窗（长度为 \( N \)）的傅里叶变换，它对应一个时域截断操作。PSWF 是截断算子的特征函数，它在频域上具有最优能量集中性，即在 \( [-\pi, \pi] \) 区间内尽可能多地集中能量，同时使区间外的能量最小。
+Dirichlet 核 $ D(\omega) $ 是矩形窗（长度为 $ N $）的傅里叶变换，它对应一个时域截断操作。PSWF 是截断算子的特征函数，它在频域上具有最优能量集中性，即在 $ [-\pi, \pi] $ 区间内尽可能多地集中能量，同时使区间外的能量最小。
 
-#### 3.3.3 求观测谱 \( \hat{X}(\omega) \)
+#### 3.3.3 求观测谱 $ \hat{X}(\omega) $
 
-在函数空间中，观测谱 \( \hat{X}(\omega) \) 可以表示为：
+在函数空间中，观测谱 $ \hat{X}(\omega) $ 可以表示为：
 $$
 \hat{X}(\omega) = \int_{-\pi}^{\pi} D(\omega - \omega') dF_X(\omega').   \tag{16.102}$$
 
-将 \( dF_X(\omega) \) 用特征函数展开：
+将 $ dF_X(\omega) $ 用特征函数展开：
 $$
 dF_X(\omega) = \sum_i \alpha_i u_i(\omega) d\omega.   \tag{16.103}$$
 
@@ -742,15 +742,15 @@ $$
 $$
 \hat{X}(\omega) = \sum_i \alpha_i \lambda_i u_i(\omega).   \tag{16.106}$$
 
-#### 3.3.4 更新 \( \hat{X}(\omega) \)
+#### 3.3.4 更新 $ \hat{X}(\omega) $
 
-我们的目标是：从观测谱 \( \hat{X}(\omega) \) 中提取出展开系数 \( \alpha_i \)，然后重构真实谱 \( dF_X(\omega) \)。
+我们的目标是：从观测谱 $ \hat{X}(\omega) $ 中提取出展开系数 $ \alpha_i $，然后重构真实谱 $ dF_X(\omega) $。
 
-对 (16.101) 两边取内积（与 \( u_k(\omega) \)）：
+对 (16.101) 两边取内积（与 $ u_k(\omega) $）：
 $$
 \langle \hat{X}, u_k \rangle = \int_{-\infty}^{\infty} \hat{X}(\omega) u_k(\omega) d\omega = \sum_i \alpha_i \lambda_i \langle u_i, u_k \rangle.   \tag{16.107}$$
 
-由于特征函数 \( \{u_i\} \) 是正交的，\( \langle u_i, u_k \rangle = \delta_{ik} \)，所以：
+由于特征函数 $ \{u_i\} $ 是正交的，$ \langle u_i, u_k \rangle = \delta_{ik} $，所以：
 $$
 \int_{-\infty}^{\infty} \hat{X}(\omega) u_k(\omega) d\omega = \alpha_k \lambda_k.   \tag{16.108}$$
 
@@ -758,7 +758,7 @@ $$
 $$
 \alpha_k = \frac{\langle \hat{X}, u_k \rangle}{\lambda_k} = \frac{\int_{-\infty}^{\infty} \hat{X}(\omega) u_k(\omega) d\omega}{\lambda_k}.   \tag{16.109}$$
 
-于是，我们可以重构真实谱 \( F_X(\omega) \)：
+于是，我们可以重构真实谱 $ F_X(\omega) $：
 $$
 dF_X(\omega) = \sum_i \alpha_i u_i(\omega) d\omega = \sum_i \frac{\langle \hat{X}, u_i \rangle}{\lambda_i} u_i(\omega) d\omega.   \tag{16.110}$$
 
@@ -772,22 +772,22 @@ $$
 
 | 步骤 | 线性空间解法（离散） | 函数空间解法（连续） |
 |------|---------------------|---------------------|
-| 基本方程 | \( \hat{X} = D F \) | \( \hat{X}(\omega) = \int D(\omega-\omega') dF_X(\omega') \) |
-| 特征分解 | \( D u_k = \lambda_k u_k \) | \( \int D(\omega-\omega') u_k(\omega') d\omega' = \lambda_k u_k(\omega) \) |
-| 展开真实谱 | \( F = \sum_i \alpha_i u_i \) | \( dF_X(\omega) = \sum_i \alpha_i u_i(\omega) d\omega \) |
-| 展开观测谱 | \( \hat{X} = \sum_i \alpha_i \lambda_i u_i \) | \( \hat{X}(\omega) = \sum_i \alpha_i \lambda_i u_i(\omega) \) |
-| 系数提取 | \( \alpha_k = \frac{u_k^\top \hat{X}}{\lambda_k} \) | \( \alpha_k = \frac{\langle \hat{X}, u_k \rangle}{\lambda_k} \) |
-| 重构真实谱 | \( F = \sum_i \frac{u_i^\top \hat{X}}{\lambda_i} u_i \) | \( dF_X(\omega) = \sum_i \frac{\langle \hat{X}, u_i \rangle}{\lambda_i} u_i(\omega) d\omega \) |
+| 基本方程 | $ \hat{X} = D F $ | $ \hat{X}(\omega) = \int D(\omega-\omega') dF_X(\omega') $ |
+| 特征分解 | $ D u_k = \lambda_k u_k $ | $ \int D(\omega-\omega') u_k(\omega') d\omega' = \lambda_k u_k(\omega) $ |
+| 展开真实谱 | $ F = \sum_i \alpha_i u_i $ | $ dF_X(\omega) = \sum_i \alpha_i u_i(\omega) d\omega $ |
+| 展开观测谱 | $ \hat{X} = \sum_i \alpha_i \lambda_i u_i $ | $ \hat{X}(\omega) = \sum_i \alpha_i \lambda_i u_i(\omega) $ |
+| 系数提取 | $ \alpha_k = \frac{u_k^\top \hat{X}}{\lambda_k} $ | $ \alpha_k = \frac{\langle \hat{X}, u_k \rangle}{\lambda_k} $ |
+| 重构真实谱 | $ F = \sum_i \frac{u_i^\top \hat{X}}{\lambda_i} u_i $ | $ dF_X(\omega) = \sum_i \frac{\langle \hat{X}, u_i \rangle}{\lambda_i} u_i(\omega) d\omega $ |
 
 ---
 
 #### 3.3.6 核心结论
 
-1. **基本方程** \( \hat{X} = D F \) 是谱估计问题的核心，它描述了有限数据截断导致的“真实谱被 Dirichlet 核涂抹”这一物理事实。
+1. **基本方程** $ \hat{X} = D F $ 是谱估计问题的核心，它描述了有限数据截断导致的“真实谱被 Dirichlet 核涂抹”这一物理事实。
 
-2. **特征函数方法**提供了求解这个方程的系统框架。Dirichlet 核 \( D \) 的特征函数 \( u_k(\omega) \) 正是**长球波函数（PSWF）**——它构成了谱估计中最优的基函数。
+2. **特征函数方法**提供了求解这个方程的系统框架。Dirichlet 核 $ D $ 的特征函数 $ u_k(\omega) $ 正是**长球波函数（PSWF）**——它构成了谱估计中最优的基函数。
 
-3. **重构公式** (16.104) 表明：如果我们能够计算 PSWF 及其对应的特征值 \( \lambda_k \)，那么我们就可以从观测谱 \( \hat{X}(\omega) \) 中反推出真实谱 \( dF_X(\omega) \)。这正是多窗谱估计（Thomson 方法）的数学基础。
+3. **重构公式** (16.104) 表明：如果我们能够计算 PSWF 及其对应的特征值 $ \lambda_k $，那么我们就可以从观测谱 $ \hat{X}(\omega) $ 中反推出真实谱 $ dF_X(\omega) $。这正是多窗谱估计（Thomson 方法）的数学基础。
 
 4. **实际实现**中，我们不需要真的去解积分方程。离散 PSWF（即 Slepian 序列）可以通过数值方法预先计算，然后直接应用于有限长度的数据，实现高分辨率、低泄漏的谱估计。这正是下一节将介绍的内容。
 
@@ -804,7 +804,7 @@ $$
 \hat{S}_X(\omega) = \frac{1}{N} \left| \sum_{k=1}^{N} X(k) \exp(-j\omega k) \right|^2.   \tag{16.112}$$
 
 **核心问题**：
-- **主瓣宽度**决定频率分辨率，宽度为 \( O(1/N) \)；
+- **主瓣宽度**决定频率分辨率，宽度为 $ O(1/N) $；
 - **旁瓣高度**决定频谱泄漏程度，衰减缓慢（第一旁瓣约 -13 dB）；
 - 平滑窗（三角窗、Hamming 窗等）以展宽主瓣为代价压低旁瓣；
 - 这是**分辨率-方差权衡**的根本困境——无法同时获得高分辨率和高稳定性。
@@ -813,7 +813,7 @@ $$
 
 ### 4.2 KL 展开与去相关
 
-**有限维**：通过特征分解 \( R_X = U \Lambda U^\top \)，得到 \( Y = U^\top X \)，使得 \( Y \) 的各分量互不相关：
+**有限维**：通过特征分解 $ R_X = U \Lambda U^\top $，得到 $ Y = U^\top X $，使得 $ Y $ 的各分量互不相关：
 $$
 X = U Y = \sum_{k=1}^{n} u_k Y_k.   \tag{16.113}$$
 
@@ -821,16 +821,16 @@ X = U Y = \sum_{k=1}^{n} u_k Y_k.   \tag{16.113}$$
 $$
 X(t) = \sum_{k=1}^{\infty} \alpha_k \phi_k(t),   \tag{16.114}$$
 其中：
-- 基函数 \( \phi_k \) 正交：\( \langle \phi_i, \phi_j \rangle = \delta_{ij} \)；
-- 系数 \( \alpha_k \) 互不相关：\( \mathbb{E}(\alpha_i \alpha_j) = \lambda_i \delta_{ij} \)。
+- 基函数 $ \phi_k $ 正交：$ \langle \phi_i, \phi_j \rangle = \delta_{ij} $；
+- 系数 $ \alpha_k $ 互不相关：$ \mathbb{E}(\alpha_i \alpha_j) = \lambda_i \delta_{ij} $。
 
-**宽平稳周期情况**：\( \phi_k(t) = \exp(j \frac{2k\pi}{T} t) \)，KL 展开退化为傅里叶级数。
+**宽平稳周期情况**：$ \phi_k(t) = \exp(j \frac{2k\pi}{T} t) $，KL 展开退化为傅里叶级数。
 
 ---
 
 ### 4.3 非周期宽平稳过程的谱表示
 
-由于平稳随机过程的样本函数通常不满足绝对可积条件，不能直接做傅里叶变换。引入**谱过程** \( F_X(\omega) \)（随机测度），谱表示为：
+由于平稳随机过程的样本函数通常不满足绝对可积条件，不能直接做傅里叶变换。引入**谱过程** $ F_X(\omega) $（随机测度），谱表示为：
 $$
 X(t) = \int_{-\infty}^{\infty} \exp(j\omega t) dF_X(\omega).   \tag{16.115}$$
 
@@ -846,7 +846,7 @@ $$
 
 ### 4.4 谱表示通过 LTI 系统
 
-LTI 系统的频响为 \( H(\omega) \)，输出谱增量与输入谱增量的关系为：
+LTI 系统的频响为 $ H(\omega) $，输出谱增量与输入谱增量的关系为：
 $$
 dF_Y(\omega) = H(\omega) dF_X(\omega).   \tag{16.118}$$
 
@@ -858,7 +858,7 @@ S_Y(\omega) = |H(\omega)|^2 S_X(\omega).   \tag{16.119}$$
 
 ### 4.5 谱估计的基本方程
 
-有限数据 \( X(1), \dots, X(N) \) 的 DTFT 为：
+有限数据 $ X(1), \dots, X(N) $ 的 DTFT 为：
 $$
 \hat{X}(\omega) = \sum_{k=1}^{N} X(k) \exp(-j\omega k).   \tag{16.120}$$
 
@@ -870,30 +870,30 @@ $$
 $$
 D_N(\theta) = \sum_{k=1}^{N} \exp(-j\theta k) = \exp\left( -j\theta \frac{N+1}{2} \right) \frac{\sin(N\theta/2)}{\sin(\theta/2)}.   \tag{16.122}$$
 
-**核心认识**：\( \hat{X}(\omega) \) 是真实谱 \( dF_X(\omega) \) 与 Dirichlet 核的卷积——主瓣造成分辨率损失，旁瓣造成频谱泄漏。
+**核心认识**：$ \hat{X}(\omega) $ 是真实谱 $ dF_X(\omega) $ 与 Dirichlet 核的卷积——主瓣造成分辨率损失，旁瓣造成频谱泄漏。
 
 ---
 
 ### 4.6 基本方程的特征函数解法
 
-在离散情况下，算子 \( D \) 作用于向量 \( F \)，基本方程为 \( \hat{X} = D F \)。通过特征分解 \( D u_k = \lambda_k u_k \)，可得：
+在离散情况下，算子 $ D $ 作用于向量 $ F $，基本方程为 $ \hat{X} = D F $。通过特征分解 $ D u_k = \lambda_k u_k $，可得：
 $$
 F = \sum_i \frac{u_i^\top \hat{X}}{\lambda_i} u_i.   \tag{16.123}$$
 
-在连续情况下，Dirichlet 核 \( D(\omega) \) 是积分核，特征方程：
+在连续情况下，Dirichlet 核 $ D(\omega) $ 是积分核，特征方程：
 $$
 \int_{-\pi}^{\pi} D(\omega - \omega') u_k(\omega') d\omega' = \lambda_k u_k(\omega).   \tag{16.124}$$
 
-**这个特征方程的解 \( u_k(\omega) \) 正是长球波函数（PSWF）**。
+**这个特征方程的解 $ u_k(\omega) $ 正是长球波函数（PSWF）**。
 
 ---
 
 ### 4.7 长球波函数（PSWF）与多窗谱估计
 
-**PSWF 的核心定义**：给定带宽参数 \( W \)，PSWF 是能量在 \( |\omega| \le W \) 频带内占比最大的有限长序列。它在时域被限制在 \( [0, N-1] \)，同时在指定频带内能量最集中。
+**PSWF 的核心定义**：给定带宽参数 $ W $，PSWF 是能量在 $ |\omega| \le W $ 频带内占比最大的有限长序列。它在时域被限制在 $ [0, N-1] $，同时在指定频带内能量最集中。
 
 **关键性质**：
-- 前几个 PSWF 的特征值 \( \lambda_k \) 接近 1，说明能量几乎全部集中在指定频带内；
+- 前几个 PSWF 的特征值 $ \lambda_k $ 接近 1，说明能量几乎全部集中在指定频带内；
 - 不同阶的 PSWF 是相互正交的；
 - 每个 PSWF 本身就是最优的时频能量集中函数。
 
@@ -908,15 +908,15 @@ $$
 
 | 公式 | 编号 | 说明 |
 |------|------|------|
-| \( \hat{S}_X(\omega) = \frac{1}{N} \left\| \sum X(k) \exp(-j\omega k) \right\|^2 \) | (16.107) | 周期图法 |
-| \( X(t) = \sum_k \alpha_k \phi_k(t) \) | (16.110) | KL 展开 |
-| \( X(t) = \int \exp(j\omega t) dF_X(\omega) \) | (16.112) | 谱表示 |
-| \( \mathbb{E}(\|dF_X\|^2) = \frac{1}{2\pi} S_X(\omega) d\omega \) | (16.114) | 谱表示与功率谱的关系 |
-| \( dF_Y(\omega) = H(\omega) dF_X(\omega) \) | (16.115) | LTI 系统对谱增量的作用 |
-| \( \hat{X}(\omega) = \int D_N(\omega-\omega') dF_X(\omega') \) | (16.118) | 谱估计基本方程 |
-| \( D_N(\theta) = \sum_{k=1}^{N} \exp(-j\theta k) \) | (16.119) | Dirichlet 核 |
-| \( \int D(\omega-\omega') u_k(\omega') d\omega' = \lambda_k u_k(\omega) \) | (16.121) | PSWF 的特征方程 |
-| \( \hat{S}_X(\omega) = \frac{\sum_k \lambda_k \|\sum_n v_k[n] X[n] \exp(-j\omega n)\|^2}{\sum_k \lambda_k} \) | (4.14) | 多窗谱估计 |
+| $ \hat{S}_X(\omega) = \frac{1}{N} \left\| \sum X(k) \exp(-j\omega k) \right\|^2 $ | (16.107) | 周期图法 |
+| $ X(t) = \sum_k \alpha_k \phi_k(t) $ | (16.110) | KL 展开 |
+| $ X(t) = \int \exp(j\omega t) dF_X(\omega) $ | (16.112) | 谱表示 |
+| $ \mathbb{E}(\|dF_X\|^2) = \frac{1}{2\pi} S_X(\omega) d\omega $ | (16.114) | 谱表示与功率谱的关系 |
+| $ dF_Y(\omega) = H(\omega) dF_X(\omega) $ | (16.115) | LTI 系统对谱增量的作用 |
+| $ \hat{X}(\omega) = \int D_N(\omega-\omega') dF_X(\omega') $ | (16.118) | 谱估计基本方程 |
+| $ D_N(\theta) = \sum_{k=1}^{N} \exp(-j\theta k) $ | (16.119) | Dirichlet 核 |
+| $ \int D(\omega-\omega') u_k(\omega') d\omega' = \lambda_k u_k(\omega) $ | (16.121) | PSWF 的特征方程 |
+| $ \hat{S}_X(\omega) = \frac{\sum_k \lambda_k \|\sum_n v_k[n] X[n] \exp(-j\omega n)\|^2}{\sum_k \lambda_k} $ | (4.14) | 多窗谱估计 |
 
 ---
 

@@ -496,11 +496,11 @@ $$
 
 ### 3.5 连续时间下的最优估计（Wiener 滤波）
 
-考虑连续时间平稳随机过程 \(X(t)\) 和 \(Y(t)\)。我们希望通过对 \(X\) 进行线性滤波来估计 \(Y(t)\)，即  
+考虑连续时间平稳随机过程 $X(t)$ 和 $Y(t)$。我们希望通过对 $X$ 进行线性滤波来估计 $Y(t)$，即  
 $$
 \hat{Y}(t) = \int_{-\infty} ^{+\infty} h(t-\tau) X(\tau) d\tau,
   \tag{4.53}$$  
-其中 \(h_{opt}(\cdot)\) 是待求的冲激响应。我们的目标是最小化均方误差  
+其中 $h_{opt}(\cdot)$ 是待求的冲激响应。我们的目标是最小化均方误差  
 $$
 \begin{aligned}
 J(h) &= \mathbb{E}\left[ \big( Y(t) - \hat{Y}(t) \big)^2 \right] \\
@@ -508,9 +508,9 @@ J(h) &= \mathbb{E}\left[ \big( Y(t) - \hat{Y}(t) \big)^2 \right] \\
 \end{aligned}.
   \tag{4.54}$$
 
-**假设**：过程为零均值（否则预先减去均值），且为平稳过程。定义自相关函数为 \(R_{XX}(\tau) = \mathbb{E}[X(t)X(t-\tau)]\)，互相关函数为 \(R_{XY}(\tau) = \mathbb{E}[X(t)Y(t-\tau)]\)。
+**假设**：过程为零均值（否则预先减去均值），且为平稳过程。定义自相关函数为 $R_{XX}(\tau) = \mathbb{E}[X(t)X(t-\tau)]$，互相关函数为 $R_{XY}(\tau) = \mathbb{E}[X(t)Y(t-\tau)]$。
 
-**正交条件**：最优滤波器 \(h_{opt}(\cdot)\) 应使残差 \(e(t)=Y(t)-\hat{Y}(t)\) 与所有过去观测值正交，即对任意 \(s\)，  
+**正交条件**：最优滤波器 $h_{opt}(\cdot)$ 应使残差 $e(t)=Y(t)-\hat{Y}(t)$ 与所有过去观测值正交，即对任意 $s$，  
 $$
 \begin{aligned}
 \mathbb{E}[ e(t) X (t-\tau) ] &= \mathbb{E}\left[ \big( Y(t) - \int_{-\infty} ^{+\infty} h_{opt}(t-\tau) X(\tau) d\tau \big) X(s) \right] \\
@@ -523,7 +523,7 @@ $$
 \mathbb{E}[ Y(t) X (s) ] - \int_{-\infty}^{+\infty} h_{opt}(t-\tau) \mathbb{E} [ X(t) X(s) ] d\tau = 0, \quad \forall s.
 $$
 
-因此，\(X\) 与 \(Y\) 的互相关函数满足
+因此，$X$ 与 $Y$ 的互相关函数满足
 
 $$
 R_{YX}(t-s) = \int_{-\infty}^{+\infty} h_{opt}(t-\tau) R_{XX}(\tau - s) ds, \quad \forall \tau.
@@ -533,11 +533,11 @@ R_{YX}(t-s) = \int_{-\infty}^{+\infty} h_{opt}(t-\tau) R_{XX}(\tau - s) ds, \qua
 
 下面进行换元化简：
 
-**步骤 1：令 \(\tau' = \tau - s\)**
+**步骤 1：令 $\tau' = \tau - s$**
 
-- 则 \(\tau = \tau' + s\)
-- 微分 \(d\tau' = d\tau\)
-- 当 \(\tau\) 从 \(-\infty\) 变化到 \(+\infty\) 时，\(\tau'\) 也相应地由 \(-\infty\) 变化到 \(+\infty\)，因此积分限保持不变。
+- 则 $\tau = \tau' + s$
+- 微分 $d\tau' = d\tau$
+- 当 $\tau$ 从 $-\infty$ 变化到 $+\infty$ 时，$\tau'$ 也相应地由 $-\infty$ 变化到 $+\infty$，因此积分限保持不变。
 
 **步骤 2：代入 (4.56) 的右边**
 
@@ -555,9 +555,9 @@ $$
 $$
 
 在此式中，令：
-- \(x = t - s\)
-- \(f = h_{opt}\)
-- \(g = R_{XX}\)
+- $x = t - s$
+- $f = h_{opt}$
+- $g = R_{XX}$
 
 则上述积分恰好构成卷积：
 $$
@@ -566,7 +566,7 @@ $$
 
 **步骤 4：代回原式**
 
-此时左边为 \(R_{YX}(t-s) = R_{YX}(x)\)。
+此时左边为 $R_{YX}(t-s) = R_{YX}(x)$。
 
 因此，(4.56) 等价于：
 $$
@@ -582,16 +582,16 @@ $$
 R_{YX}(t-s) = h \ast R_X(\tau)
 $$
 
-**频域求解**：对上式两边取傅里叶变换。设 \(S_{XX}(\omega)\) 和 \(S_{XY}(\omega)\) 分别为自功率谱和互功率谱，由卷积定理可得  
+**频域求解**：对上式两边取傅里叶变换。设 $S_{XX}(\omega)$ 和 $S_{XY}(\omega)$ 分别为自功率谱和互功率谱，由卷积定理可得  
 $$
 S_{XY}( \omega) = H(\omega) S_{XX}(\omega),
   \tag{4.57}$$  
-其中 \(H(\omega) = \int h_{opt}(t) e^{-j\omega t} dt\) 为滤波器的传递函数。因此最优传递函数为  
+其中 $H(\omega) = \int h_{opt}(t) e^{-j\omega t} dt$ 为滤波器的传递函数。因此最优传递函数为  
 $$
 \boxed{H_{\text{opt}}(\omega) = \frac{S_{XY}(\omega)}{S_{XX}(\omega)}}.
   \tag{4.58}$$
 
-**因果性约束**：实际物理系统要求 \(h_{opt}(t)=0\)（当 \(t<0\) 时），即满足因果性。此时 Wiener‑Hopf 方程需采用谱分解法求解，以得到因果 Wiener 滤波器。不过，上面给出的非因果解（双边滤波）已在频域给出了闭式形式，与离散情形下的 \(R_{XX}^{-1}R_{XY}\) 完全对应（只需将自相关矩阵替换为功率谱密度）。
+**因果性约束**：实际物理系统要求 $h_{opt}(t)=0$（当 $t<0$ 时），即满足因果性。此时 Wiener‑Hopf 方程需采用谱分解法求解，以得到因果 Wiener 滤波器。不过，上面给出的非因果解（双边滤波）已在频域给出了闭式形式，与离散情形下的 $R_{XX}^{-1}R_{XY}$ 完全对应（只需将自相关矩阵替换为功率谱密度）。
 
 ---
 
