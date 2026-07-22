@@ -94,7 +94,7 @@ X_t = \theta_0 + \theta_1 t + \frac{1}{2}\theta_2 t^2 + \varepsilon_t,
 现在假设我们想要估计 $\theta$ 的某个函数 $g(\theta)$，并设 $\hat{g}(X)$ 是 $g(\theta)$ 的一个无偏估计，即 $\mathbb{E}[\hat{g}(X)] = g(\theta)$。将期望写为积分形式：
 $$
 g(\theta) = \int_{-\infty}^{\infty} \hat{g}(x) f(x, \theta) dx.   \tag{4.6}$$
-对 (1) 两边关于 $\theta$ 求导（假设积分与求导可交换），得
+对 (4.6) 两边关于 $\theta$ 求导（假设积分与求导可交换），得
 $$
 g'(\theta) = \int_{-\infty}^{\infty} \hat{g}(x) \frac{\partial}{\partial\theta} f(x, \theta) dx
 = \int_{-\infty}^{\infty} \hat{g}(x) \left( \frac{\partial}{\partial\theta} \log f(x, \theta) \right) f(x, \theta) dx.   \tag{4.7}$$
@@ -108,7 +108,7 @@ $$
 用 (4.7) 减去 (4.9)，得到关键等式：
 $$
 g'(\theta) = \int_{-\infty}^{\infty} \bigl( \hat{g}(x) - g(\theta) \bigr) \left( \frac{\partial}{\partial\theta} \log f(x, \theta) \right) f(x, \theta) dx.   \tag{4.10}$$
-对 (5) 应用 Cauchy-Schwarz 不等式，可得
+对 (4.10) 应用 Cauchy-Schwarz 不等式，可得
 $$
 \bigl( g'(\theta) \bigr)^2 \le \mathbb{E}\bigl[ (\hat{g}(X) - g(\theta))^2 \bigr] \cdot \mathbb{E}\left[ \left( \frac{\partial}{\partial\theta} \log f(X, \theta) \right)^2 \right].
   \tag{4.11}$$
@@ -171,7 +171,7 @@ $$
 
 其中 $J_{\boldsymbol{g}}(\boldsymbol{\theta})$ 是 $\boldsymbol{g}$ 的 **Jacobian 矩阵**（$k \times m$），其元素为 $(J_{\boldsymbol{g}})_{ij} = \frac{\partial g_i}{\partial \theta_j}$。
 
-下面我们使用 **打洞消元法（Schur complement）** 详细证明 (11)。先预备半正定矩阵的分块性质。
+下面我们使用 **打洞消元法（Schur complement）** 详细证明 (4.18)。先预备半正定矩阵的分块性质。
 
 ---
 
@@ -193,7 +193,7 @@ $$
 
 ---
 
-##### 2.2.3.2 打洞消元法证明 (11)
+##### 2.2.3.2 打洞消元法证明 (4.18)
 
 **步骤 1：构造联合协方差矩阵（涉及得分向量与待估计量）**
 
@@ -318,7 +318,7 @@ L \Sigma L^\top = \begin{pmatrix}
   $$
   \operatorname{Cov}(\hat{\boldsymbol{g}}) \succeq J_{\boldsymbol{g}}(\boldsymbol{\theta})\, I(\boldsymbol{\theta})^{-1}\, J_{\boldsymbol{g}}(\boldsymbol{\theta})^\top.   \tag{4.29}$$
 
-这就完成了 (11) 的证明。
+这就完成了 (4.18) 的证明。
 
 ---
 
@@ -490,7 +490,7 @@ $$
   \tag{4.52}$$  
 其中 $R_{YY} = \mathbb{E}[YY^\top]$。总 MSE 为该矩阵的迹。
 
-**注意**：该结果与 3.2 节形式一致，只是将向量 $R_{XY}$ 换成了矩阵 $R_{XY}$，且 $\Theta$ 的每一列独立地满足同样的方程。因此多维线性估计可以分解为多个独立的一维问题，但共享同一个 $R_{XX}^{-1}$。
+**注意**：该结果与 3.3 节形式一致，只是将向量 $R_{XY}$ 换成了矩阵 $R_{XY}$，且 $\Theta$ 的每一列独立地满足同样的方程。因此多维线性估计可以分解为多个独立的一维问题，但共享同一个 $R_{XX}^{-1}$。
 
 ---
 
@@ -568,7 +568,7 @@ $$
 
 此时左边为 \(R_{YX}(t-s) = R_{YX}(x)\)。
 
-因此，(4.56') 等价于：
+因此，(4.56) 等价于：
 $$
 \boxed{R_{YX}(x) = (h * R_{XX})(x)}.
 $$

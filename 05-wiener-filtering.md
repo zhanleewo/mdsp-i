@@ -183,19 +183,19 @@ H(\omega) = \frac{S_{YX}(\omega)}{S_{XX}(\omega)}  \tag{5.9}$$
    $$
    \mathbb{E}[X X^\top] = \mathbb{E}[(S+e)(S+e)^\top] = \mathbb{E}[S S^\top] + \mathbb{E}[S e^\top] + \mathbb{E}[e S^\top] + \mathbb{E}[e e^\top].  \tag{5.17}$$
    由于信号与噪声不相关，$\mathbb{E}[S e^\top] = \mathbb{E}[S] \mathbb{E}[e^\top] = 0$（若均值为零，否则中心化后亦为零），同理 $\mathbb{E}[e S^\top]=0$。记 $$
-   R_s = \mathbb{E}[S S^\top], \quad R_e = \mathbb{E}[e e^\top],  \tag{5.18}$$
+   R_S = \mathbb{E}[S S^\top], \quad R_e = \mathbb{E}[e e^\top],  \tag{5.18}$$
    则
    $$
-   \mathbb{E}[X X^\top] = R_s + R_e.  \tag{5.19}$$
+   \mathbb{E}[X X^\top] = R_S + R_e.  \tag{5.19}$$
 
    计算 $\mathbb{E}[X S_n]$： $$
    \mathbb{E}[X S_n] = \mathbb{E}[(S+e) S_n] = \mathbb{E}[S S_n] + \mathbb{E}[e S_n] = \mathbb{E}[S S_n] + 0.  \tag{5.20}$$
-   记 $r_{ss_n} = \mathbb{E}[S S_n]$，这是一个 $n \times 1$ 列向量，其第 $i$ 个分量为 $\mathbb{E}[S_i S_n] = R_s(i,n)$，即信号自相关矩阵 $R_s$ 的第 $n$ 列。
+   记 $r_{SS_n} = \mathbb{E}[S S_n]$，这是一个 $n \times 1$ 列向量，其第 $i$ 个分量为 $\mathbb{E}[S_i S_n] = R_S(i,n)$，即信号自相关矩阵 $R_S$ 的第 $n$ 列。
 
    因此，最优系数向量为
    $$
-   a_{\text{opt}} = (R_s + R_e)^{-1} \, r_{ss_n}.  \tag{5.21}$$
-   这就是维纳滤波用于去噪时的标准结果：滤波器系数由信号与噪声的自相关矩阵决定，且只依赖于信号的自相关向量 $r_{ss_n}$。
+   a_{\text{opt}} = (R_S + R_e)^{-1} \, r_{SS_n}.  \tag{5.21}$$
+   这就是维纳滤波用于去噪时的标准结果：滤波器系数由信号与噪声的自相关矩阵决定，且只依赖于信号的自相关向量 $r_{SS_n}$。
 
    **最优线性滤波的均方误差**计算如下：
 

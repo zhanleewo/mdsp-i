@@ -158,7 +158,7 @@ R_X(2) & R_X(1) & R_X(0) & \cdots & R_X(k-2) \\
 R_X(k) & R_X(k-1) & R_X(k-2) & \cdots & R_X(0)
 \end{pmatrix}
 \begin{pmatrix}
--1 \\ \alpha_{k,1} \\ \alpha_{k,2} \\ \vdots \\ \alpha_{k,k}
+\alpha_{k,1} \\ \alpha_{k,2} \\ \vdots \\ \alpha_{k,k}
 \end{pmatrix}
 = 0
   \tag{6.18}$$
@@ -195,7 +195,7 @@ R_X(1) & R_X(0) & R_X(1) & \cdots & R_X(k-2) & R_X(k-1) \\
 R_X(2) & R_X(1) & R_X(0) & \cdots & R_X(k-3) & R_X(k-2) \\
 \vdots & \vdots & \vdots & \ddots & \vdots & \vdots \\
 R_X(k-1) & R_X(k-2) & R_X(k-3) & \cdots & R_X(2) & R_X(1) \\
-R_X(k) & R_X(k-2) & R_X(k-3) & \cdots & R_X(1) & R_X(0) 
+R_X(k) & R_X(k-1) & R_X(k-2) & \cdots & R_X(1) & R_X(0) 
 \end{pmatrix}
 \begin{pmatrix}
 -1 \\ \alpha_{k-1,1} \\ \alpha_{k-1,2} \\ \vdots \\ \alpha_{k-1,k-1} \\ 0

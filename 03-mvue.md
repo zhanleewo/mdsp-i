@@ -351,12 +351,12 @@ $$
  $$
 0 = \frac{\partial}{\partial \theta} \int_{-\infty}^{+\infty} f(x, \theta) \, dx = \int_{-\infty}^{+\infty} \frac{\partial}{\partial \theta} f(x, \theta) \, dx. \tag{3.53} $$
 
-### 5.3 构造关键等式（把 $\theta$ 引入 (2) 中）
+### 5.3 构造关键等式（把 $\theta$ 引入 (3.53) 中）
 
-由于 $\theta$ 是常数，可以将 (3.51) 式两边乘以 $\theta$，得
+由于 $\theta$ 是常数，可以将 (3.53) 式两边乘以 $\theta$，得
 $$
 0 = \theta \int_{-\infty}^{+\infty} \frac{\partial}{\partial \theta} f(x, \theta) \, dx = \int_{-\infty}^{+\infty} \theta \frac{\partial}{\partial \theta} f(x, \theta) \, dx.  \tag{3.54} $$
-现在用 (3.49) 减去 (2')，得到
+现在用 (3.51) 减去 (3.52)，得到
 $$
 1 = \int_{-\infty}^{+\infty} \hat{\theta}(x) \frac{\partial f}{\partial \theta} \, dx - \int_{-\infty}^{+\infty} \theta \frac{\partial f}{\partial \theta} \, dx
   = \int_{-\infty}^{+\infty} \bigl( \hat{\theta}(x) - \theta \bigr) \frac{\partial f}{\partial \theta} \, dx.  \tag{3.55} $$
@@ -376,7 +376,7 @@ $$
 由 Cauchy-Schwarz 不等式，
 $$
 \left( \int_{-\infty}^{+\infty} u(x) v(x) \, dx \right)^2 \le \int_{-\infty}^{+\infty} u(x)^2 dx \cdot \int_{-\infty}^{+\infty} v(x)^2 dx.  \tag{3.58} $$
-对 (4) 两边平方并应用该不等式：
+对 (3.57) 两边平方并应用该不等式：
 $$
 1^2 \le \left( \int_{-\infty}^{+\infty} \bigl( \hat{\theta}(x) - \theta \bigr)^2 f(x, \theta) \, dx \right) \cdot \left( \int_{-\infty}^{+\infty} \left( \frac{\partial}{\partial \theta} \log f(x, \theta) \right)^2 f(x, \theta) \, dx \right).  \tag{3.59} $$
 即
@@ -388,7 +388,7 @@ $$
 定义 Fisher 信息量为
 $$
 I(\theta) = \mathbb{E}\left[ \left( \frac{\partial}{\partial \theta} \log f(X, \theta) \right)^2 \right].  \tag{3.61} $$
-则从 (3.58) 可得
+则从 (3.60) 可得
 $$
 \operatorname{Var}(\hat{\theta}(X)) = \mathbb{E}\bigl[ (\hat{\theta}(X) - \theta)^2 \bigr] \ge \overset{CRLB}{\boxed{\frac{1}{I(\theta)}}}.  \tag{3.62} $$
 这就是 Cramér-Rao 下界：任何无偏估计的方差至少为 Fisher 信息量的倒数。
@@ -410,7 +410,7 @@ $$
 0 = \frac{\partial}{\partial\theta}\int_{-\infty}^{+\infty} f\,dx = \int_{-\infty}^{+\infty} \frac{\partial f}{\partial\theta}\,dx.  \tag{3.64} $$
 
 **第二步：对 $\theta$ 求二阶导**  
-对 (3.49) 式再对 $\theta$ 求导：
+对 (3.64) 式再对 $\theta$ 求导：
  $$
 0 = \frac{\partial}{\partial\theta}\int_{-\infty}^{+\infty} \frac{\partial f}{\partial\theta}\,dx = \int_{-\infty}^{+\infty} \frac{\partial^2 f}{\partial\theta^2}\,dx. \tag{3.65} $$
 
@@ -423,7 +423,7 @@ $$
 $$
 \int_{-\infty}^{+\infty} f\,\frac{\partial^2}{\partial\theta^2}\log f\,dx = -\int_{-\infty}^{+\infty} \frac{1}{f}\left(\frac{\partial f}{\partial\theta}\right)^2 dx + \int_{-\infty}^{+\infty} \frac{\partial^2 f}{\partial\theta^2}\,dx.  \tag{3.67} $$
 
-左边即为 $\mathbb{E}\left[\frac{\partial^2}{\partial\theta^2}\log f\right]$。右边第一项是 $-\mathbb{E}\left[\left(\frac{\partial}{\partial\theta}\log f\right)^2\right]$，右边第二项由 (3.51) 知为 $0$。因此
+左边即为 $\mathbb{E}\left[\frac{\partial^2}{\partial\theta^2}\log f\right]$。右边第一项是 $-\mathbb{E}\left[\left(\frac{\partial}{\partial\theta}\log f\right)^2\right]$，右边第二项由 (3.65) 知为 $0$。因此
 $$
 \mathbb{E}\left[\frac{\partial^2}{\partial\theta^2}\log f\right] = -\mathbb{E}\left[\left(\frac{\partial}{\partial\theta}\log f\right)^2\right].  \tag{3.68} $$
 
