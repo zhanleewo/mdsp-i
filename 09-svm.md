@@ -252,7 +252,7 @@ z_i \ge 1 - y_i(\omega^\top x_i + b), & i=1,\dots,n.
 
 - **挤压（Squeezing）**：在目标函数中我们最小化 $\sum_i z_i$，这迫使优化过程尽量让 $z_i$ 取小值（向零方向挤压）。结合约束 $z_i \ge 1 - y_i(\omega^\top x_i + b)$，对于已正确分类且满足 $y_i(\omega^\top x_i + b) \ge 1$ 的点，$z_i$ 可以取 $0$；对于不满足的点，$z_i$ 会被挤压到恰好等于 $1 - y_i(\omega^\top x_i + b)$，从而等价于 Hinge 损失。因此，“挤压”本质上是将非光滑的 Hinge 损失用线性不等式和辅助变量光滑化，使得问题可以高效求解。
 
-另一种理解方式：原始硬间隔要求 $y_i(\omega^\top x_i + b) \ge 1$；现在通过引入松弛变量 $z_i$，我们允许约束放松到 $y_i(\omega^\top x_i + b) \ge 1 - z_i$，同时通过在目标函数中最小化 $\sum z_i$ 来“惩罚”这种放松。这就是**松弛（relaxing）**与**挤压（squeezing）**的凸优化思想，它使得 SVM 能够处理线性不可分数据，并为后续的对偶推导和核方法奠定基础。
+另一种理解方式：原始硬间隔要求 $y_i(\omega^\top x_i + b) \ge 1$；现在通过引入松弛变量 $z_i$，我们允许约束放松到 $y_i(\omega^\top x_i + b) \ge 1 - z_i$，同时通过在目标函数中最小化 $\sum z_i$ 来“惩罚”这种放松。这就是 **松弛（relaxing）**与**挤压（squeezing）** 的凸优化思想，它使得 SVM 能够处理线性不可分数据，并为后续的对偶推导和核方法奠定基础。
 
 #### 2.2.4 拉格朗日对偶问题
 
@@ -290,16 +290,27 @@ $$
 对于任意可行点 $x$（满足 $f_i(x) \le 0$ 和 $h_i(x)=0$）和任意 $\lambda_i \ge 0$，有 $\lambda_i f_i(x) \le 0$，$\mu_i h_i(x)=0$，因此：
 $$
 L(x, \lambda, \mu) = f_0(x) + \sum_i \lambda_i f_i(x) + \sum_i \mu_i h_i(x) \le f_0(x).   \tag{9.21}$$
+
+
 从而
 $$
-\min_{x \in \mathcal{D}} L(x, \lambda, \mu) \le \min_{x \in \mathcal{D}} f_0(x) = p^*,   \tag{9.22}$$
-其中 $\mathcal{D}$ 是原问题的可行域。另一方面，对于固定的 $(\lambda, \mu)$，考虑**无约束**的最小化 $\min_x L(x, \lambda, \mu)$，它是在更大的集合（整个空间）上求最小值，因此：
+\min_{x \in \mathcal{D}} L(x, \lambda, \mu) \le f_0(x),   \tag{9.22}$$
+
+从而
 $$
-\min_x L(x, \lambda, \mu) \le \min_{x \in \mathcal{D}} L(x, \lambda, \mu).   \tag{9.23}$$
-综合得：
+\min_{x \in \mathcal{D}} L(x, \lambda, \mu) \le \min_{x \in \mathcal{D}} f_0(x),   \tag{9.23}$$
+
+
+从而
 $$
-\min_x L(x, \lambda, \mu) \le \min_{x \in \mathcal{D}}L(x, \lambda, \mu) \le p^*.   \tag{9.24}$$
-也就是说，**有约束的小范围找到的最小值一定大于或等于没有约束的条件下找到的最小值**（因为约束集更小）。因此，无约束的最小值 $\min_x L(x,\lambda,\mu)$ 给出的是原问题最优值 $p^*$ 的一个更低的下界，而内层在可行域上的最小值 $\min_{x \in \mathcal{D}} L(x,\lambda,\mu)$ 更接近 $p^*$。在 min‑max 框架中，我们使用无约束的最小化（因为对偶函数的定义通常是 $\min_x L(x,\lambda,\mu)$），它对所有 $x$ 取最小，从而得到一个下界。外层最大化再把这个下界提高。
+\max_{\lambda, \mu} \; \min_{x \in \mathcal{D}} L(x, \lambda, \mu) \le \min_{x \in \mathcal{D}} f_0(x),   \tag{9.24}$$
+
+先固定 $\lambda, \mu$的情况下：
+根据 (9.21) 可以知道 $f_0(x)$ 比任何一个 $L(x, \lambda, \mu)$ 都大，那一定比最小的都大，因此我们得到了 (9.22);
+任何一个 $f_0(x)$ 都比 $\min_{x \in \mathcal{D}} L(x, \lambda, \mu) $ 大， 所有最小的 $f_0(x)$ 也应该更大，因此我们得到了 (9.23);
+
+根据 (9.23) 既然比任何$\min_{x \in \mathcal{D}} L(x, \lambda, \mu) $都大，那也要比最大的大，因此我们得到了 (9.24);
+
 
 ##### 2.2.4.2.2 示例：最大间隔超平面与原点距离
 
